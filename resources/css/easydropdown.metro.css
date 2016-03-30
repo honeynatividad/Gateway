@@ -1,0 +1,260 @@
+/* --- EASYDROPDOWN METRO THEME --- */
+
+/* PREFIXED CSS */
+
+.ndropdown,
+.ndropdown div,
+.ndropdown li,
+.ndropdown div::after,
+.ndropdown .carat,
+.ndropdown .carat:after,
+.ndropdown .selected::after,
+.ndropdown:after{
+	-webkit-transition: all 150ms ease-in-out;
+	-moz-transition: all 150ms ease-in-out;
+	-ms-transition: all 150ms ease-in-out;
+	transition: all 150ms ease-in-out;
+}
+
+.ndropdown .selected::after,
+.ndropdown.scrollable div::after{
+	-webkit-pointer-events: none;
+	-moz-pointer-events: none;
+	-ms-pointer-events: none;
+	pointer-events: none;
+}
+
+/* WRAPPER */
+
+.ndropdown{
+	position: relative;
+	width: 310px;
+	cursor: pointer;
+	font-weight: 200;
+	background: #f8f8f8;
+	
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	user-select: none;
+}
+
+.ndropdown.open{
+	z-index: 2;
+}
+
+.ndropdown:hover{
+	background: #f4f4f4;
+}
+
+.ndropdown:after{
+	content: '';
+	position: absolute;
+	right: 3px;
+	bottom: 3px;
+	top: 2px;
+	width: 30px;
+	background: transparent;
+}
+
+.ndropdown.focus:after{
+	background: #218143;
+}
+
+.ndropdown:after{
+	background: #218143;
+}
+/* CARAT */
+
+.ndropdown .carat,
+.ndropdown .carat:after{
+	content: '';
+	position: absolute;
+	right: 10px;
+	top: 50%;
+	margin-top: -4px;
+	border: 8px solid transparent;
+	border-top: 8px solid #fff;
+	z-index: 1;
+	
+	-webkit-transform-origin: 50% 20%;
+	-moz-transform-origin: 50% 20%;
+	-ms-transform-origin: 50% 20%;
+	transform-origin: 50% 20%;
+	
+}
+
+.ndropdown .carat:after{
+	margin-top: -10px;
+	right: -8px;
+	border-top-color: #f8f8f8;
+}
+
+.ndropdown:hover .carat:after{
+	border-top-color: #218143;
+}
+
+.ndropdown.focus .carat{
+	border-top-color: #f8f8f8;
+}
+
+.ndropdown.focus .carat:after{
+	border-top-color: #218143;
+}
+
+.ndropdown .carat:after{
+	border-top-color: #218143;
+}
+
+.ndropdown.open .carat{
+	-webkit-transform: rotate(180deg);
+	-moz-transform: rotate(180deg);
+	-ms-transform: rotate(180deg);
+	transform: rotate(180deg);
+}
+
+/* OLD SELECT (HIDDEN) */
+
+.ndropdown .old{
+	position: absolute;
+	left: 0;
+	top: 0;
+	height: 0;
+	width: 0;
+	overflow: hidden;
+}
+
+.ndropdown select{
+	position: absolute;
+	left: 0px;
+	top: 0px;
+}
+
+.ndropdown.touch .old{
+	width: 100%;
+	height: 100%;
+}
+
+.ndropdown.touch select{
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+}
+
+/* SELECTED FEEDBACK ITEM */ 
+
+.ndropdown .selected,
+.ndropdown li{
+	display: block;
+	font-size: 15px;
+	line-height: 1;
+	font-weight:bold;
+	color: #1e8246;
+	padding: 9px 12px;
+	overflow: hidden;
+	white-space: nowrap;
+	font-family:Montserratr;
+	background-color: #f0f0f0;
+}
+
+.ndropdown .selected::after{
+	content: '';
+	position: absolute;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	width: 60px;
+	
+	border-radius: 0 2px 2px 0;
+	box-shadow: inset -55px 0 25px -20px #f8f8f8;
+}
+
+.ndropdown:hover .selected::after{
+	box-shadow: inset -55px 0 25px -20px #f4f4f4;
+}
+
+/* DROP DOWN WRAPPER */
+
+.ndropdown div{
+	position: absolute;
+	height: 0;
+	left: 0;
+	right: 0;
+	top: 100%;
+	margin-top: -1px;
+	background: #f8f8f8;
+	overflow: hidden;
+	opacity: 0;
+}
+
+.ndropdown:hover div{
+	background: #f4f4f4;
+}
+
+/* Height is adjusted by JS on open */
+
+.ndropdown.open div{
+	opacity: 1;
+	z-index: 999;
+}
+
+/* FADE OVERLAY FOR SCROLLING LISTS */
+
+.ndropdown.scrollable div::after{
+	content: '';
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	height: 50px;
+	
+	box-shadow: inset 0 -50px 30px -35px #f8f8f8;
+}
+
+.ndropdown.scrollable:hover div::after{
+	box-shadow: inset 0 -50px 30px -35px #f4f4f4;
+}
+
+.ndropdown.scrollable.bottom div::after{
+	opacity: 0;
+}
+
+/* DROP DOWN LIST */
+
+.ndropdown ul{
+	position: absolute;
+	left:-37px;
+	top: 0;
+	height: 100%;
+	width: 100%;
+	list-style: none;
+	overflow: hidden;
+}
+
+.ndropdown.scrollable.open ul{
+	overflow-y: auto;
+}
+
+/* DROP DOWN LIST ITEMS */
+
+.ndropdown li{
+	list-style: none;
+	padding: 8px 12px;
+}
+
+/* .focus class is also added on hover */
+
+.ndropdown li.focus{
+	background: #218143;
+	position: relative;
+	z-index: 3;
+	color: #fff;
+}
+.mfinder > div {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.ndropdown li.active{
+	background: #218143;
+	color: #fff;
+}

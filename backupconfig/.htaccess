@@ -1,0 +1,17 @@
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /gateway/
+RewriteBase /gateway/download/
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /gateway/index.php [L]
+SetEnv webservice https://apps.philcare.com.ph/PCareWebServicesTest
+SetEnv webservicemobile https://apps.philcare.com.ph/iPhilCare_Mobile
+php_value upload_max_filesize 500M
+php_value memory_limit 256M
+php_value post_max_size 500M
+AddType video/ogg .ogv .ogg
+AddType video/webm .webm
+AddType video/mp4 .mp4
+</IfModule>

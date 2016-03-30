@@ -1,0 +1,138 @@
+#Calendar {
+	/*width:300px;*/	
+}
+.pull-left > a {
+    color: #ffffff;
+    text-decoration: none;
+}
+.pull-right > a {
+    color: #ffffff;
+    text-decoration: none;
+}
+#Calendar td {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+}
+
+#Calendar .cMonth {
+	font-weight:bold;
+	text-align:center;
+}
+
+#Calendar .wDays {
+	font-weight:bold;
+	text-align:center;
+    color: #df5a49;
+    font-size: 22px;	
+	/*background-color:#CCC;*/
+}
+#calrow {
+    background-color: #323c46;
+    margin-top: -15px;
+}
+
+#calrow > div > table {
+    margin-bottom: 0 !important;
+}
+.table > thead > tr > th {
+    border-bottom: 0 none;
+    vertical-align: bottom;
+}
+#msgheader th {
+    border-top: 0 none;
+}
+#Calendar .mNav {
+	font-weight:bold;
+	text-align:center;
+	background-color:#CCC;
+}
+
+#Calendar table td a {
+	text-decoration:none;
+	color:#000;
+}
+
+#Calendar table td a:hover {
+	text-decoration:underline;
+}
+
+
+#Calendar .withevent {
+	text-align:center;
+	color:#000;
+    font-size: 18px;
+    padding: 15px;
+}
+
+#Calendar .noevent {
+	text-align:center;
+	color:#000;
+    font-size: 18px;
+    padding: 15px;	
+}
+.evnt{color:#efc94c}
+.circle_red
+{
+background-color: #df5a49;
+border-radius: 100%;
+color: #ffffff;
+font-weight: 700;
+padding: 15px 2px;
+text-align: center;
+}
+
+.glyphicon {
+    line-height: 0;
+}
+#Events {
+	/*width:300px;*/
+		
+}
+
+#Events h2 {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	font-weight:bold;
+	margin-top:10px;
+}
+
+#Events span {
+	font-size:13px;
+}
+
+
+/*new added  */
+.cal-event {
+    float: right;
+    list-style: outside none disc;
+	width:100%;
+}
+.cal-event li {
+	background: #323c46;
+    border: thick none;
+    border-radius: 0px !important;
+    color: #ffffff;
+    display: block;
+    margin-right: -1px;
+    padding: 15px 20px 43px;
+}
+.cal-event li .datetext {
+    float: left;
+    margin-right: 20px;
+	color: #efc94c;
+	text-align: center;
+}
+.cal-event li .datetext span {
+    color:#efc94c;;
+    font-size: 13px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+.cal-event li .datetext h4 {
+    color: #efc94c;
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 20px;
+    margin: 5px 0;
+}
+.cal-event li:nth-child(odd) { background: #334d5c; }

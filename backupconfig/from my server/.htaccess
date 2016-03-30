@@ -1,0 +1,8 @@
+RewriteEngine on
+RewriteBase /
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule .* index.php?/$0 [PT,L] 
+RewriteCond %{REQUEST_URI} /hra$
+SetEnv webservice https://apps.philcare.com.ph/PCareWebServicesTest
+SetEnv webservicemobile https://apps.philcare.com.ph/iPhilCare_Mobile          
