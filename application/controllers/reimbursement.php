@@ -2,7 +2,9 @@
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Reimbursement extends CI_Controller {
+    private $user;
     private $certid;
+    private $agreement;
     function __construct(){
         parent::__construct();	
         $this->load->model("model_portal_users");
@@ -17,6 +19,8 @@ class Reimbursement extends CI_Controller {
         //page renew
         $renew = array("page_id"=>46);
         $this->session->set_userdata('pages',$renew);
+        $this->certid=$session_data['certid'];
+        $this->agreeement = $session_data['agreement_no'];
         $this->certid=$session_data['certid'];
     }
     function maintemp($temp,$data){
@@ -76,8 +80,9 @@ class Reimbursement extends CI_Controller {
                         );
                         //$reimbursement = $this->wslibrary->setReimbursement($_REQUEST);
                         $session_data = $this->session->userdata('logged_in');
-                        //$this->load->library('archive');
-                        //$this->archive->addAudit($session_data['user_id'],'download','add admin','1');
+                        
+                        $this->load->library('archive');
+                        $this->archive->addAudit($session_data['certid'],'reimbursement','request','0',$this->agreement);
                         
                         $msg_ok =  "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
                         //$this->session->set_flashdata('upload_ok', $msg_ok);
@@ -136,28 +141,24 @@ class Reimbursement extends CI_Controller {
 		$t = $this->send_mail("hanna.natividad@philcare.com.ph","This is my email for you");
 		//print_r($t);
 	}
-	public function send_mail($to,$subject,$d) {
+    public function send_mail($to,$subject,$d) {
 		
-		$this->load->library('My_PHPMailer');
-		
-        
-		
+        $this->load->library('My_PHPMailer');
         $mail = new PHPMailer();	
 		//$mail->SMTPDebug = 2;       
-		$mail->SMTPAuth   = false; 
+        $mail->SMTPAuth   = false; 
         $mail->SMTPSecure = "ssl"; 
         $mail->Host       = '172.16.255.6'; 
         $mail->Port       = 25; 
         $mail->Username   = 'advisory@philcare.com.ph'; 
         $mail->Password   = 'P@ssw0rd'; 
         $mail->SetFrom('advisory@philcare.com.ph','PhilCare Advisory');  
-		
-		
         
-        $destino = $to; 
-        $mail->AddAddress($to);
-        //$mail->addAddress('Rosemarie.Sangalang@PhilCare.com.ph');
+        $destino = $to;         
+        //$mail->addAddress('Rosemarie.Sangalang@PhilCare.com.ph');        
         $mail->addAddress('teletechclaims@philcare.com.ph');
+        $mail->AddBCC("Rosemarie.Sangalang@PhilCare.com.ph");
+        $mail->AddBCC($to);        
         $mail->IsHTML(true);
         $mail->Subject    = $subject;
 
@@ -171,7 +172,7 @@ class Reimbursement extends CI_Controller {
         <body>
         <br><br>
         <h4>Dear All,</h4>
-        <p>Please see be informed that there is a request for Reimbursement, please see details below.</p>
+        <p>Please be informed that there is a request for Reimbursement, please see details below.</p>
 		<p><b>DATE:</b>".$d['date_availed']." </p>
 		<p><b>AGREEEMENT NO:</b>".$session_data['agreement_no']." </p>		
                 <p><b>Certificate No: ".$session_data['MemberCertNo']."</b></p>

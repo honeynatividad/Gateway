@@ -25,6 +25,7 @@ class Feedback extends CI_Controller {
     function index(){
         $this->maintemp('feedback',array());
         $session_data = $this->session->userdata('logged_in');
+        //print_r($session_data);
         if(isset($_POST['submit'])){
             $category = $_POST['category'];
             $subcategory = $_POST['subcategory'];
@@ -44,8 +45,15 @@ class Feedback extends CI_Controller {
             $data['first_name'] = $session_data['FirstName'];
             $data['last_name'] = $session_data['LastName'];
             $data['agreement_no'] = $session_data['agreement_no'];
-            $this->send_mail($email, $category, $data);
-            $this->session->set_flashdata('success', "Feed was sent successfully.");
+            //$this->send_mail($email, $category, $data);
+            $send = $this->wslibrary->feedback_send($data);
+            //print_r((string)$send->MessageReturn);
+            if(!$send){
+                $this->session->set_flashdata('warning', 'Something happened! Please contact web master!');
+            }else{
+                $this->session->set_flashdata('success', (string)$send->MessageReturn);
+            }
+            
             redirect("feedback/view_feedback",'refresh');
         }
     }
@@ -128,7 +136,8 @@ class Feedback extends CI_Controller {
         $session_data = $this->session->userdata('logged_in');
         $certno = $session_data['MemberCertNo'];
         
-        $data['feedbacks'] = $this->model_portal_admin->feedback_history($certno);
+        //$data['feedbacks'] = $this->model_portal_admin->feedback_history($certno);
+        $data['feedbacks'] = $this->wslibrary->feedback_view($session_data['certid']);
         $this->maintemp('view_feedback',$data);
     }
     

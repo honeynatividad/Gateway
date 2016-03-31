@@ -5,74 +5,70 @@ class Account extends CI_Controller {
 	private $userid;
 	private $certid;
 	
-	function __construct(){
-		parent::__construct();	
-		$this->load->model("model_portal_users");
-                $this->load->model("model_portal_admin");
-		 $session_data = $this->session->userdata('logged_in');
+    function __construct(){
+        parent::__construct();	
+        $this->load->model("model_portal_users");
+        $this->load->model("model_portal_admin");
+         $session_data = $this->session->userdata('logged_in');
 
-		 if(!$session_data){
-			 redirect("login");
-		 }
-		 //$data['username'] = $session_data['username'];	
-		 $data = $session_data;
-                 //echo '<pre>';
-                 //print_r($data);
-                 //echo '</pre>';
-		//page renew
-                if($session_data['hra']==1){
-                    redirect("hra");
-                }
-                //print_r($session_data['hra']);
-		$this->userid = $session_data['user_id'];
-		$renew = array("page_id"=>2);
-		$this->session->set_userdata('pages',$renew);	
-		
-		$this->certid=$session_data['certid'];
-		
-		
-	}
-	function maintemp($temp,$data){
-		$this->load->view('header',$data);
-		$this->load->view($temp,$data);
-		$this->load->view('footer');
-	}
+         if(!$session_data){
+                 redirect("login");
+         }
+
+         $data = $session_data;
+
+        if($session_data['hra']==1){
+            redirect("hra");
+        }
+        //print_r($session_data['hra']);
+        $this->userid = $session_data['user_id'];
+        $renew = array("page_id"=>2);
+        $this->session->set_userdata('pages',$renew);	
+
+        $this->certid=$session_data['certid'];
+
+    }
+    
+    function maintemp($temp,$data){
+        $this->load->view('header',$data);
+        $this->load->view($temp,$data);
+        $this->load->view('footer');
+    }
 	
-	function index(){
-		if(isset($_REQUEST['update_add'])){
-			//$update = $this->model_portal_users->updatemyaddress($_REQUEST,$this->userid);
-                        $update = $this->wslibrary->philUpdate($_REQUEST);
-                        $this->load->library('archive');
-						$session_data = $this->session->userdata('logged_in');
-						
-                        $this->archive->addAudit($_POST['CertNo'],'account','edit','0',$session_data['agreement_no']);
-						//$this->archive->addAudit($this->certid,'account','member information','0',$info->AgreementNo);
-			if($update){
-				redirect("account");
-			}
-		}
-		
-			
-		//$data['info'] = $this->model_portal_users->getUserDetails($this->userid);
-                //$data['dental'] = $this->wslibrary->getDentalAvailments($this->certid);
-                
-		$data['info'] = $this->wslibrary->getMembersInfo($this->certid);
-                $info = $this->wslibrary->getMembersInfo($this->certid);
-		
-		$data['dental'] = $this->wslibrary->ridersDental($this->certid);
-                $data['cert'] = $this->certid;
-                $data['life'] = $this->wslibrary->ridersLife($this->certid);
-                $data['maternity'] = $this->wslibrary->ridersMaternity($this->certid);
-		$data['mydependents'] = $this->wslibrary->getDependents($this->certid);
-                
-               $data['util'] = $this->wslibrary->getUtilMainList($this->certid);
-                $data['util_summary'] = $this->wslibrary->getUtilSummary($this->certid);
-                
-                $this->load->library('archive');
-                $this->archive->addAudit($this->certid,'account','member information','0',$info->AgreementNo);
-                    
-		$this->maintemp('my_account',$data);
-	}
+    function index(){
+        if(isset($_REQUEST['update_add'])){
+                //$update = $this->model_portal_users->updatemyaddress($_REQUEST,$this->userid);
+            $update = $this->wslibrary->philUpdate($_REQUEST);
+            $this->load->library('archive');
+                                    $session_data = $this->session->userdata('logged_in');
+
+            $this->archive->addAudit($_POST['CertNo'],'account','edit','0',$session_data['agreement_no']);
+                                    //$this->archive->addAudit($this->certid,'account','member information','0',$info->AgreementNo);
+            if($update){
+                    redirect("account");
+            }
+        }
+
+        //$data['info'] = $this->model_portal_users->getUserDetails($this->userid);
+        //$data['dental'] = $this->wslibrary->getDentalAvailments($this->certid);
+        $data['session_data'] = $this->session->userdata('logged_in');
+        $data['info'] = $this->wslibrary->getMembersInfo($this->certid);
+        $info = $this->wslibrary->getMembersInfo($this->certid);
+
+        $data['dental'] = $this->wslibrary->ridersDental($this->certid);
+        $data['cert'] = $this->certid;
+        $data['life'] = $this->wslibrary->ridersLife($this->certid);
+        $data['maternity'] = $this->wslibrary->ridersMaternity($this->certid);
+        $data['mydependents'] = $this->wslibrary->getDependents($this->certid);
+
+        $data['util'] = $this->wslibrary->getUtilMainList($this->certid);
+        $data['util_summary'] = $this->wslibrary->getUtilSummary($this->certid);
+
+        $this->load->library('archive');
+        $this->archive->addAudit($this->certid,'account','member information','0',$info->AgreementNo);
+
+        $this->maintemp('my_account',$data);
+    }
     
         function editprofile(){
             if(isset($_REQUEST['editprofile'])){

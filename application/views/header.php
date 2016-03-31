@@ -13,15 +13,15 @@
 
     <!-- Bootstrap Core CSS -->
     <link href="<?php echo base_url("resources");?>/css/bootstrap.css" rel="stylesheet">
-	<link type="image/x-icon" href="<?php echo base_url("resources") ?>/img/phil_fav.png" rel="shortcut icon">
+    <link type="image/x-icon" href="<?php echo base_url("resources") ?>/img/phil_fav.png" rel="shortcut icon">
     <!-- Custom CSS -->
     
     <link href="css/4-col-portfolio.css" rel="stylesheet">
-	<link href="<?php echo base_url("resources");?>/css/style.css" rel="stylesheet">
+    <link href="<?php echo base_url("resources");?>/css/style.css" rel="stylesheet">
     <link href="<?php echo base_url("resources");?>/css/switch.css" rel="stylesheet">
     <link href="<?php echo base_url("resources");?>/css/calendar.css" rel="stylesheet" type="text/css" />
     <link href="<?php echo base_url("resources");?>/css/easydropdown.metro.css" rel="stylesheet" />
-	<script src="<?php echo base_url("resources");?>/js/jquery.js"></script>
+    <script src="<?php echo base_url("resources");?>/js/jquery.js"></script>
     <script src="<?php echo base_url("resources");?>/js/bootstrap.min.js"></script>
    
     
@@ -32,82 +32,26 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-	<script src="<?php echo base_url("resources/ck/ckeditor.js");?>"></script>
+    <script src="<?php echo base_url("resources/ck/ckeditor.js");?>"></script>
     <script src="<?php echo base_url("resources/ck/style.js");?>"></script>
     <script src="<?php echo base_url("resources");?>/js/jquery.easydropdown.js"></script>
     <script>
 	$(document).ready(function(){
-		$(".main-back").click(function(){
-			location.href="<?php echo base_url("login");?>";
-		});
-		$("#selectall").click(function(){
-			
-			if(this.checked){
-				$(".coloring").addClass("click");
-			}else{
-				$(".coloring").removeClass("click");
-			}			
-			$('.checkitem').prop('checked', this.checked); 
-		});
+            $(".main-back").click(function(){
+                location.href="<?php echo base_url("login");?>";
+            });
+            $("#selectall").click(function(){
+
+                if(this.checked){
+                        $(".coloring").addClass("click");
+                }else{
+                        $(".coloring").removeClass("click");
+                }			
+                $('.checkitem').prop('checked', this.checked); 
+            });
 	});
 	</script> 
-        <style>
         
-        /* jssor slider bullet navigator skin 03 css */
-        /*
-        .jssorb03 div           (normal)
-        .jssorb03 div:hover     (normal mouseover)
-        .jssorb03 .av           (active)
-        .jssorb03 .av:hover     (active mouseover)
-        .jssorb03 .dn           (mousedown)
-        */
-        .jssorb03 {
-            position: absolute;
-        }
-        .jssorb03 div, .jssorb03 div:hover, .jssorb03 .av {
-            position: absolute;
-            /* size of bullet elment */
-            width: 21px;
-            height: 21px;
-            text-align: center;
-            line-height: 21px;
-            color: white;
-            font-size: 12px;
-            background: url('img/b03.png') no-repeat;
-            overflow: hidden;
-            cursor: pointer;
-        }
-        .jssorb03 div { background-position: -5px -4px; }
-        .jssorb03 div:hover, .jssorb03 .av:hover { background-position: -35px -4px; }
-        .jssorb03 .av { background-position: -65px -4px; }
-        .jssorb03 .dn, .jssorb03 .dn:hover { background-position: -95px -4px; }
-
-        /* jssor slider arrow navigator skin 03 css */
-        /*
-        .jssora03l                  (normal)
-        .jssora03r                  (normal)
-        .jssora03l:hover            (normal mouseover)
-        .jssora03r:hover            (normal mouseover)
-        .jssora03l.jssora03ldn      (mousedown)
-        .jssora03r.jssora03rdn      (mousedown)
-        */
-        .jssora03l, .jssora03r {
-            display: block;
-            position: absolute;
-            /* size of arrow element */
-            width: 55px;
-            height: 55px;
-            cursor: pointer;
-            background: url('img/a03.png') no-repeat;
-            overflow: hidden;
-        }
-        .jssora03l { background-position: -3px -33px; }
-        .jssora03r { background-position: -63px -33px; }
-        .jssora03l:hover { background-position: -123px -33px; }
-        .jssora03r:hover { background-position: -183px -33px; }
-        .jssora03l.jssora03ldn { background-position: -243px -33px; }
-        .jssora03r.jssora03rdn { background-position: -303px -33px; }
-    </style>
 </head>
 
 <body>
@@ -115,6 +59,7 @@
 <?php 
 
 $session_data = $this->session->userdata('logged_in');
+//print_r($session_data);
 $sess_pages = $this->session->userdata('pages');
 //print_r($session_data);
 if($session_data['level']==1){    
@@ -184,10 +129,8 @@ if($session_data['level']==1){
                                     <?php }else{
                                         $target_dir = dirname($_SERVER["SCRIPT_FILENAME"])."/upload/profile/";                                        
                            
-                            
-                            
-                            $files = glob($target_dir . $udetails->CertNo . ".jpg");
-                            $count = count($files);
+                                        $files = glob($target_dir . $udetails->CertNo . ".jpg");
+                                        $count = count($files);
                             
                             if($count > 0) { ?>
                                 <?php if($udetails->Sex =='MALE'){?>

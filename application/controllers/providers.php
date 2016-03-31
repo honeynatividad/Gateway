@@ -449,6 +449,9 @@ class Providers extends CI_Controller {
     function find_doctor(){
         $data['provinces'] = $this->wslibrary->getCities();
         $data['userid'] = $this->user;
+        $this->load->model("model_portal_admin");
+        $this->load->library('archive');
+        $this->archive->addAudit($this->certid,'providers','find a doctor','0',$this->agreement);
         $this->maintemp('find_doctor',$data);
     }
 	

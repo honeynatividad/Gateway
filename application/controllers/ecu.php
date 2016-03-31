@@ -53,8 +53,8 @@ class Ecu extends CI_Controller {
             $this->session->set_flashdata('msg', (string)$req->MessageReturn);
                        
             //redirect("ecu/calendar");
-            //$this->load->library('archive');
-            //$this->archive->addAudit($cert,'ecu','submit schedule','0',$this->agreement);
+            $this->load->library('archive');
+            $this->archive->addAudit($cert,'ecu','submit schedule','0',$this->agreement);
             $this->load->helper('test');
             $events = $this->wslibrary->getListAppointment($this->certid);
             if($events){                
@@ -127,16 +127,16 @@ class Ecu extends CI_Controller {
                 </select>
              </div>  		
              <script>
-             $(document).ready(function(){
-                var $selects = $('#dsctval<?php echo $random;?>');
-                $selects.easyDropDown({
-                cutOff: 10
-                });	 
-             });
-            </script>
+                                 $(document).ready(function(){
+                                                var $selects = $('#dsctval<?php echo $random;?>');
+                                                $selects.easyDropDown({
+                                                cutOff: 10
+                                                });	 
+                                 });
+                                 </script>
         <?php	}else{
-                    echo "error";
-            }
+                                echo "error";
+                        }
         }
     }
     
@@ -151,10 +151,10 @@ class Ecu extends CI_Controller {
                 <option value="0" class="label">Provider</option>
                 <?php
                                                
-                    foreach($distct as $prov){
+                                                                foreach($distct as $prov){
                                                                 
-                ?>
-                <option value="<?php echo urlencode($prov->ProviderCode);?>"><?php echo $prov->ProviderName;?></option>
+                                                ?>
+                                                <option value="<?php echo urlencode($prov->ProviderCode);?>"><?php echo $prov->ProviderName;?></option>
                     <?php }?>
                 </select>
              </div>  		

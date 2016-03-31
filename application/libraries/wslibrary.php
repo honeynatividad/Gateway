@@ -13,7 +13,45 @@ class wslibrary {
 	
     public function __construct() {
         
+    }
+    
+    public function feedback_send($data){
+        //print_r($data);
+        $url = $_SERVER['webservice']."/Members.svc/SendMembersFeedBack/?CertNo=".$data['cert_no']."&Category=".$data['category']."&SubCategory=".$data['sub_category']."&FeedBack=".$data['feedback'];
+       // https://apps.philcare.com.ph/PCareWebServicesTest/Members.svc/SendMembersFeedBack/?CertNo=5443460&Category=Category&SubCategory=SubCategory&FeedBack=sdfsdfsdfsdfsdf
+        $getxml = @file_get_contents($url);
+       
+	$xml = simplexml_load_file($url);
+        //$xml = simplexml_load_file($url);
+        //print_r($xml);
+            $data = $xml->SendMembersFeedBackResult;
+            $namespaces = $data->getNameSpaces(true);
+        if(property_exists($data->children('a:SuccessFlag'), 'SuccessFlag')){
+            $info = $data->children($namespaces['a']);		
+            return $info;
+        }else{
+            return false;
+        }	
+       
+    }
+    
+    public function feedback_view($data){
         
+        $url = $_SERVER['webservice']."/Members.svc/MemberFeedBackList/?CertNo=".$data;
+       // https://apps.philcare.com.ph/PCareWebServicesTest/Members.svc/SendMembersFeedBack/?CertNo=5443460&Category=Category&SubCategory=SubCategory&FeedBack=sdfsdfsdfsdfsdf
+        $getxml = @file_get_contents($url);
+       
+	$xml = simplexml_load_file($url);
+        //$xml = simplexml_load_file($url);
+        //print_r($xml);
+        $data = $xml->MemberFeedBackListResult;
+        $namespaces = $data->getNameSpaces(true);
+        if(property_exists($data->children('a:MemberFeedBackList'), 'MemberFeedBackList')){
+            $info = $data->children($namespaces['a']);		
+            return $info;
+        }else{
+            return false;
+        }
         
     }
     function phillogin($user,$pass){

@@ -7,30 +7,28 @@
         <div class="panel-heading">
             <div class="pull-right main-title">Feedback</div>
         </div>
+        <?php if ($this->session->flashdata('success')) { ?>
+        <div class="alert alert-danger"> <?= $this->session->flashdata('success') ?> </div>
+        <?php } ?>
+        <?php if ($this->session->flashdata('warning')) { ?>
+        <div class="alert alert-danger"> <?= $this->session->flashdata('warning') ?> </div>
+        <?php } ?>
         <div class="panel-body">
             <table class="table">
                 <th>Category</th>
                 <th>Sub Category</th>
                 <th>Feedback</th>
-                <th>Status</th>
-                <th>Action</th>
+                <th>Date</th>
+                
                 <?php foreach($feedbacks as $feedback): ?>
                 <tr>
-                    <td><?php echo $feedback->category ?></td>
-                    <td><?php echo $feedback->sub_category ?></td>
-                    <td><?php echo $feedback->feedback ?></td>
+                    <td><?php echo $feedback->Category ?></td>
+                    <td><?php echo $feedback->SubCategory ?></td>
+                    <td><?php echo $feedback->FeedBack ?></td>
                     <td>
-                        <?php 
-                        if($feedback->response==""){
-                            echo "No response";
-                        }else{
-                            echo "Already replied";
-                        }
-                        ?>
+                        <?php echo $feedback->DateCreated ?>
                     </td>
-                    <td>
-                        <a href="<?php echo base_url("feedback/view/".$feedback->portal_feedback_id) ?>" class="btn btn-default-green" >View</a>
-                    </td>
+                    
                 </tr>
                 <?php endforeach; ?>
             </table>
