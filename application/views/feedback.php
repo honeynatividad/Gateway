@@ -23,10 +23,8 @@
                         <div class="col-sm-9">
                             <select class="form-control" id="category" name="category" id="category" data-settings='{"cutOff":10}'>
                                 <option value="">---- Select Category ----</option>
-                                <option>Member Information</option>
-                                <option>Find A Provider</option>
-                                <option>ACU/ECU</option>
-                                <option>Reimbursement</option>
+                                <option>Inquiry</option>
+                                <option>Complaint</option>                                
                                 
                             </select>
                         </div>

@@ -15,12 +15,15 @@
         
         <div class="panel-body">
             <div class="col-md-12">
+                <?php if($apeecu==""){ ?>
+                <div class="alert alert-danger"> Please contact HR to schedule an appointment </div>
+                <?php }else{?>
                 
                 <form method="POST" action="" class="form-horizontal">
                     <div class="col-sm-10 col-md-12">
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Type of Appointment</label>
-                                <div class="col-sm-10">
+                            <div class="col-sm-10">
                                 <select class="form-control" id="sel1" name="type">
                                     <?php if($apeecu=="APE" || $apeecu=="APE/ECU"): ?>
                                     <option value="APE">Annual Physical Examination</option>
@@ -91,6 +94,7 @@
                         </div>
                     </div>
                 </form>  
+                <?php } ?>
             </div>
         </div>
         <div class="panel-body">

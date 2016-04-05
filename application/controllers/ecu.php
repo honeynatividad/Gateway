@@ -74,15 +74,16 @@ class Ecu extends CI_Controller {
                 
                 //setting the ECU and APE
                 //because webservice is not ready yet
-                //$classifcation =$session_data['MemberClassification'];
+                $classification =$session_data['MemberClassification'];
+                $member_type = $session_data['MemberType'];
                  /*
-                DEPS OF DIRECTORS & SR MANAGERS W/MAT
+                  * 
+                SR MANAGERS W/ MAT
 
-                DEPS OF DIRECTORS & SR MANAGERS W/O MAT
+                SR MANAGERS W/O MAT
+                DIRECTORS W/ MAT
+                DIRECTORS W/O MAT
 
-                DEPS OF MANAGERS W/MAT
-
-                DEPS OF MANAGERS W/O MAT
                         */
                 /*$ecu = 0;                  
                 if($classifcation=="DEPS OF DIRECTORS & SR MANAGERS W/ MAT"){
@@ -92,7 +93,45 @@ class Ecu extends CI_Controller {
                 }else {
                     
                 }*/
-                $data['apeecu'] = $session_data['APEECU'];
+                $apeecu="";
+                if($member_type=="PRINCIPAL"){
+                    if($classification=="SR MANAGER W/ MAT"){
+                        $apeecu = "ECU";
+                    }elseif($classification=="SR MANAGERS W/O MAT"){
+                        $apeecu = "ECU";
+                    }elseif($classification=="DIRECTORS W/ MAT"){
+                        $apeecu = "ECU";
+                    }elseif($classification=="DIRECTORS W/O MAT"){
+                        $apeecu = "ECU";
+                    }else{
+                        $apeecu = "";
+                    }
+                }elseif($member_type=="DEPENDENT"){
+                   
+                    if($classification=="DEPS OF DIRECTORS & SR MANAGERS W/MAT"){
+                        $apeecu = "ECU";
+                    }elseif($classification=="DEPS OF DIRECTORS & SR MANAGERS W/O MAT"){
+                        $apeecu = "ECU";
+                    }elseif($classification=="DEPS OF MANAGERS W/MAT"){
+                        $apeecu = "APE";
+                    }elseif($classification=="DEPS OF MANAGERS W/O MAT"){
+                        $apeecu = "APE";
+                    }elseif($classification=="DEPS OF RANK & FILE W/ MAT"){
+                        $apeecu = "APE";
+                    }elseif($classification=="DEPS OF RANK & FILE W/O MAT"){
+                        $apeecu = "APE";
+                    }elseif($classification=="DEPS OF SUPERVISORS W/ MAT"){
+                        $apeecu = "APE";
+                    }elseif($classification=="DEPS OF SUPERVISORS W/O MAT"){
+                        $apeecu = "APE";
+                    }else{
+                        $apeecu = "";
+                    }
+
+                }
+                $data['classfication'] = $classification;
+                $data['member_type'] = $member_type;
+                $data['apeecu'] = $apeecu;
                 $this->maintemp('ecu',$data);
             }else{
                 $this->session->set_flashdata('error_access', 'You are not allowed to access that area!');

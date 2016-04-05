@@ -1,4 +1,4 @@
-<?php 
+                        <?php 
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Feedback extends CI_Controller {
@@ -15,6 +15,8 @@ class Feedback extends CI_Controller {
         //page renew
         $renew = array("page_id"=>65);
         $this->session->set_userdata('pages',$renew);	
+        $this->certid=$session_data['certid'];
+        $this->agreement = $session_data['agreement_no'];
     }
     function maintemp($temp,$data){
         $this->load->view('header',$data);
@@ -46,6 +48,9 @@ class Feedback extends CI_Controller {
             $data['last_name'] = $session_data['LastName'];
             $data['agreement_no'] = $session_data['agreement_no'];
             //$this->send_mail($email, $category, $data);
+            $cert = $session_data['certid'];
+            $this->load->library('archive');
+            $this->archive->addAudit($cert,'feedback','submit feedback','0',$this->agreement);
             $send = $this->wslibrary->feedback_send($data);
             //print_r((string)$send->MessageReturn);
             if(!$send){
@@ -157,19 +162,15 @@ class Feedback extends CI_Controller {
             <label class="col-sm-3 control-label">Sub Category</label>
             <div class="col-sm-9">
                 <select class="form-control" id="subcategory" name="subcategory" >
-                    
-                    <?php 
+                    <option value="0"></option>
+                   <?php 
                     $cat = $_POST['category'];
-                    if($cat=='Find A Provider'){
-                        echo '<option value="Find a clinic/hostpial">Find a Clinic/Hospital</option>';
-                        echo '<option value="Find a Doctor/Dentist">Find a Doctor/Dentist</option>';
-                    }else if($cat=='ACU/ECU'){
-                        echo '<option value="Online Appoinment">Online Appointment</option>';
-                        echo '<option value="Viewing of Result">Viewinig of Result</option>';
-                    }else if($cat=='Member Information'){
-                        echo '<option value="Coverage">Coverage</option>';
-                        echo '<option value="Basic">Basic</option>';
-                        echo '<option value="Utilization">Utilization</option>';
+                    if($cat=='Inquiry'){
+                        echo '<option value="Release of ID Cards">Release of ID Cards</option>';
+                        echo '<option value="Membership Status">Membership Status</option>';
+                        echo '<option value="Benefit Coverage">Benefit Coverage</option>';
+                        echo '<option value="Dental">Dental</option>';
+                        echo '<option value="Others">Others</option>';
                     }
                     ?>
                 </select>

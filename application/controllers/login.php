@@ -143,7 +143,8 @@ class Login extends CI_Controller {
                             "RegistrationCode"=>$phil->RegistrationCode,
                             "SuccessFlag"=>$phil->SuccessFlag,
                             "UserName"=>$phil->UserName,
-                            "MemberType"=>$phil->MemberType);	
+                            "MemberType"=>$phil->MemberType,
+                            "MemberClassification"=>$phil->MemberClassification);	
                         $newarray['password']=$password;
                         $newarray['prepaid']=$pa_account;
 
@@ -172,7 +173,8 @@ class Login extends CI_Controller {
                             'EmailAdd' => (string)$memdetails->Email,
                             'MemberType'    => (string)$memdetails->MemberType,
                             'APEECU'  => (string)$memdetails->APEECU,
-                            'ContactNo' => (string)$memdetails->ContactNumber
+                            'ContactNo' => (string)$memdetails->ContactNumber,
+                            'MemberClassification' => (string)$memdetails->MemberClassification
                         );                    
 
                         $this->session->set_userdata('logged_in', $sess_array);                        
