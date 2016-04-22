@@ -5,7 +5,7 @@
     <?php $user = $this->session->userdata('logged_in');?>
     <div class="panel panel-philcare">
         <div class="panel-heading">
-            <div class="pull-right main-title">Member Feedback Form</div>
+            <div class="pull-right main-title">Online Helpdesk</div>
         </div>
         <div class="panel-body">
 
@@ -23,21 +23,18 @@
                         <div class="col-sm-9">
                             <select class="form-control" id="category" name="category" id="category" data-settings='{"cutOff":10}'>
                                 <option value="">---- Select Category ----</option>
-                                <option>Inquiry</option>
-                                <option>Complaint</option>                                
-                                
+                                <option value="Card Availability">Card Availability</option>
+                                <option value="Benefit Plan">Benefit Plan</option>
+                                <option value="Co-Pay Facilities">Co-Pay Facilities</option>
+                                <option value="Availment Process">Availment Process</option>
+                                <option value="Provider Network, including Dental Clinics">Provider Network, including Dental Clinics</option>
+                                <option value="Accreditation Requests and Status">Accreditation Requests and Status</option>
+                                <option value="Reimbursement Claims">Reimbursement Claims</option>
+                                <option value="Gcash-related">Gcash-related</option>                                
                             </select>
                         </div>
                     </div>
-                    <div class="form-group" id="feed">
-                        <label class="col-sm-3 control-label">Sub Category</label>
-                        <div class="col-sm-9">
-                            <select class="form-control" id="subcategory" name="subcategory" >
-                                <option value="">---- Select Sub Category ----</option>
-                                
-                            </select>
-                        </div>
-                    </div>
+                    
                     
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Feedback</label>
@@ -51,10 +48,22 @@
                         <!--  <button class="btn btn-red" type="button" id="clearbtn">CLEAR</button>-->
                         </div>
                     </div>
+                    <div class="form-group ">
+                        
+                    </div>  
                 </form>
                 <div class="loaderphil" id="thisanchor">
                     <div class="row"><img src="<?php echo base_url("resources/img/ajax-loader.gif");?>"></div>
-                </div>  
+                </div>
+                <div class="col-sm-12">
+                            
+                            
+                                <p>
+                                    PhilCare’s business hours is from Monday to Friday, 8am-5pm. Should you have further concerns, you may reach us through our Call Center Hotline: (02) 462-1800 or SMS (0918)887.2273 and 0908)887.2273
+                                </p>                    
+                            
+                        </div>
+                
     		<!-- end articles -->
             
         </div>
@@ -65,15 +74,7 @@
 <script>
 $(document).ready(function(){
     
-    $("#category").change(function(){
-        $(".lloading").text("Loading....");
-        $.post("<?php echo base_url("feedback/getSubcategory");?>",
-        {category:$(this).val()},function(data){
-
-                $("#feed").html(data);	
-                $(".lloading").text('');
-        });		
-    });
+    
 	$(".feedchange").bootstrapSwitch();
 
 	$('.feedchange').on('switchChange.bootstrapSwitch', function (event, state) {

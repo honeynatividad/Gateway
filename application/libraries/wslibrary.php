@@ -402,7 +402,7 @@ class wslibrary {
         $url = $_SERVER['webservice'].'/Registration.svc/Verify/?Certno='.$cert.'&UserName='.$username.'&RegistrationCode='.$reg.'&Source=Test';
         
         $getxml = file_get_contents($url);
-	$xml = simplexml_load_string($getxml);
+	   $xml = simplexml_load_string($getxml);
         if(!$xml){
             $xml = '';
             return $xml;
@@ -613,10 +613,7 @@ class wslibrary {
         
         //$url = 'https://apps.philcare.com.ph/iPhilCare_Mobile/Providers.svc/FindProviders/?Type=ER&City=0&District=0&Hospital=&Top=100&CertNo=A)3WOL0;
         //print_r("this is my date == > ".$city." :: ".$distct."  :: ".$hospital." :: ".$type." :: ".$certno);
-        if($city==0)
-            $city="";
-        if($distct==0)
-            $distct="";
+        
         
         $url = $_SERVER['webservicemobile'].'/Providers.svc/FindProviders/?Type='.$type.'&City='.$city.'&District='.$distct.'&Hospital='.$hospital.'&Top=100&CertNo='.$certno;
         //print_r($url);

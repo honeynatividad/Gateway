@@ -95,7 +95,7 @@ class Ecu extends CI_Controller {
                 }*/
                 $apeecu="";
                 if($member_type=="PRINCIPAL"){
-                    if($classification=="SR MANAGER W/ MAT"){
+                    if($classification=="SR MANAGERS W/ MAT"){
                         $apeecu = "ECU";
                     }elseif($classification=="SR MANAGERS W/O MAT"){
                         $apeecu = "ECU";

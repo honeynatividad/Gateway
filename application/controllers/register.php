@@ -12,6 +12,8 @@ class Register extends CI_Controller {
         if($session_data){
             redirect("home");
         }
+        $this->certid=$session_data['certid'];
+        $this->agreement = $session_data['agreement_no'];
     }
 
     function index(){
@@ -78,7 +80,9 @@ class Register extends CI_Controller {
                 $data['message_success'] = $registertoPhilLive->Message;
                 $this->load->view("valid_cert_reg",$data);
                 $this->load->library('archive');
+                $cert = $session_data['certid'];
                 //$this->archive->addAudit($_POST['CertNo'],'register','index','0',$memdetails->AgreementNo);
+                $this->archive->addAudit($cert,'register','view','0',$this->agreement);
             }
         } elseif(isset($_REQUEST['resend_email'])){
             $getInfo = $this->wslibrary->getMembersInfo($_REQUEST['CertNo']);
@@ -91,7 +95,10 @@ class Register extends CI_Controller {
             $data['rsendmail']='Email sent! If you need further assistance, please call our 24/7 Customer Hotline at 63 (2) 461 1800. For outside Metro Manila (toll free for PLDT): 1800 1888 3230';
             $this->load->view("valid_cert_reg",$data);                   
             $this->load->library('archive');
-            $this->archive->addAudit($_POST['CertNo'],'register','resend','0',$getInfo['AgreementNo']);
+            //$this->archive->addAudit($_POST['CertNo'],'register','resend','0',$getInfo['AgreementNo']);
+            $cert = $session_data['certid'];
+                //$this->archive->addAudit($_POST['CertNo'],'register','index','0',$memdetails->AgreementNo);
+            $this->archive->addAudit($cert,'register','resend','0',$this->agreement);
         }else{
             //$resp = recaptcha_check_answer($privatekey,$_SERVER["REMOTE_ADDR"],$_POST["recaptcha_challenge_field"],$_POST["recaptcha_response_field"]);
             $data['recaptcha_html'] = recaptcha_get_html($publickey);
@@ -346,6 +353,10 @@ class Register extends CI_Controller {
         $memdetails = $this->wslibrary->getMembersInfo($certNo);
         
         $data['check'] = $this->wslibrary->verifyUser($certNo,$username,$registrationCode,$memdetails->AgreementNo);
+        $cert = $session_data['certid'];
+                //$this->archive->addAudit($_POST['CertNo'],'register','index','0',$memdetails->AgreementNo);
+		$this->archive->addAudit($cert,'register','verify','0',$this->agreement);
+
         $this->load->view("verified",$data);	
     }
     

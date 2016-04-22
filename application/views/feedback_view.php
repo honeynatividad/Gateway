@@ -9,12 +9,10 @@
         </div>
         <div class="panel-body">
             <?php foreach($feedbacks as $feedback): ?>
-            <p>Category: <?php echo $feedback->category ?></p>
-            <p>Sub Category: <?php echo $feedback->sub_category ?></p>
-            <p>Feedback: <?php echo $feedback->feedback ?></p>
+            <p>Category: <?php echo $feedback->category ?></p>            
+            <p>Details: <?php echo $feedback->feedback ?></p>
             <hr>
-            <p>Response: <?php echo $feedback->response ?></p>
-            <p>Agent: <?php echo $feedback->agent ?></p>
+            
             <?php endforeach; ?>
             
         </div>

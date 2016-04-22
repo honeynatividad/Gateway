@@ -285,7 +285,7 @@ class Providers extends CI_Controller {
 
                     <div class="metro">
                         <select class="districtvalue form-control" id="districtvalue" name="district">
-                            <option value="0" class="label">DISTRICT/CITY</option>
+                            <option value="" class="label">DISTRICT/CITY</option>
                         <?php
                             foreach($distct as $p){
                             $namespaces = $distct->getNameSpaces(true);

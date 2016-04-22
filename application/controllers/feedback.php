@@ -1,4 +1,4 @@
-                        <?php 
+<?php 
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Feedback extends CI_Controller {
@@ -30,13 +30,13 @@ class Feedback extends CI_Controller {
         //print_r($session_data);
         if(isset($_POST['submit'])){
             $category = $_POST['category'];
-            $subcategory = $_POST['subcategory'];
+            $subcategory = '';
             $comment = $_POST['comment'];
             $certno = $session_data['MemberCertNo'];
             $email = $session_data['EmailAdd'];
             $data = array(
                 "category"      => $category,
-                "sub_category"  => $subcategory,
+                "sub_category"  => '',
                 "feedback"      => $comment,
                 "cert_no"       => $certno,
                 "status"        => 1,
@@ -142,7 +142,16 @@ class Feedback extends CI_Controller {
         $certno = $session_data['MemberCertNo'];
         
         //$data['feedbacks'] = $this->model_portal_admin->feedback_history($certno);
-        $data['feedbacks'] = $this->wslibrary->feedback_view($session_data['certid']);
+        //$data['feedbacks'] = $this->wslibrary->feedback_view($certno);
+
+        $feedback = $this->wslibrary->feedback_view($certno);
+        //print_r($feedback);
+        //print_r($feedback);
+        if($feedback){
+            $data['feedbacks'] = $feedback;
+        }else{
+            $data['feedbacks'] = array();
+        }
         $this->maintemp('view_feedback',$data);
     }
     
@@ -150,6 +159,7 @@ class Feedback extends CI_Controller {
         $id = $this->uri->segment(3);     
         $session_data = $this->session->userdata('logged_in');
         $certno = $session_data['MemberCertNo'];
+        
         $data['feedbacks'] = $this->model_portal_admin->feedback_view($id);
         $this->maintemp('feedback_view',$data);
     }
@@ -169,8 +179,7 @@ class Feedback extends CI_Controller {
                         echo '<option value="Release of ID Cards">Release of ID Cards</option>';
                         echo '<option value="Membership Status">Membership Status</option>';
                         echo '<option value="Benefit Coverage">Benefit Coverage</option>';
-                        echo '<option value="Dental">Dental</option>';
-                        echo '<option value="Others">Others</option>';
+                        echo '<option value="Dental">Dental</option>';                        
                     }
                     ?>
                 </select>

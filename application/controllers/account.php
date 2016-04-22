@@ -27,6 +27,8 @@ class Account extends CI_Controller {
 
         $this->certid=$session_data['certid'];
 
+        $this->agreement = $session_data['agreement_no'];
+
     }
     
     function maintemp($temp,$data){
@@ -40,10 +42,10 @@ class Account extends CI_Controller {
                 //$update = $this->model_portal_users->updatemyaddress($_REQUEST,$this->userid);
             $update = $this->wslibrary->philUpdate($_REQUEST);
             $this->load->library('archive');
-                                    $session_data = $this->session->userdata('logged_in');
+            $session_data = $this->session->userdata('logged_in');
 
-            $this->archive->addAudit($_POST['CertNo'],'account','edit','0',$session_data['agreement_no']);
-                                    //$this->archive->addAudit($this->certid,'account','member information','0',$info->AgreementNo);
+            $this->archive->addAudit($_POST['CertNo'],'account','edit-password','0',$this->agreement);
+            //$this->archive->addAudit($this->certid,'account','member information','0',$info->AgreementNo);
             if($update){
                     redirect("account");
             }
@@ -65,7 +67,7 @@ class Account extends CI_Controller {
         $data['util_summary'] = $this->wslibrary->getUtilSummary($this->certid);
 
         $this->load->library('archive');
-        $this->archive->addAudit($this->certid,'account','member information','0',$info->AgreementNo);
+        $this->archive->addAudit($this->certid,'account','view member information','0',$this->agreement);
 
         $this->maintemp('my_account',$data);
     }
@@ -151,7 +153,8 @@ class Account extends CI_Controller {
 		// if everything is ok, try to upload file
 		} else {
 			if (move_uploaded_file($files["new_photo"]["tmp_name"], $newpath)) {
-
+        $this->load->library('archive');
+        $this->archive->addAudit($this->certid,'account','edit-photo','0',$this->agreement);
 				//$this->model_portal_users->updateImage($this->userid,$newname);
 				//echo 'truephiuploaded';                            
 			} else {

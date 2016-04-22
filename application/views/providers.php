@@ -67,7 +67,7 @@
                                             <div class="form-group">
                                                 <div class="metro">
                                                     <select class="form-control" onchange="fetch_select(this.value);" id="area_name" data-settings='{"cutOff":10}'>
-                                                        <option value="0" class="label">PROVINCE/METRO MANILA</option>
+                                                        <option value="" class="label">PROVINCE/METRO MANILA</option>
                                                         <?php 
                                                         
                                                         foreach($provinces as $p){
@@ -104,7 +104,7 @@
                                             <div class="form-group" id="distrct_rep">
                                                 <div class="metro">
                                                     <select class="districtvalue form-control" id="districtvalue" name="district">
-                                                        <option value="0" class="label">DISTRICT/CITY</option>                                                        
+                                                        <option value="" class="label">DISTRICT/CITY</option>                                                        
                                                     </select>
                                                 </div>   
                                             </div><!-- /input-group -->
@@ -165,6 +165,7 @@ $(document).ready(function(){
 		var dt=$("#districtvalue").val();
                 var certno = $("#certno").val();
 		if(type!='0'){
+            //alert(loc+area+type+dt);
 			$(".loaderphil").show();
 			$.post("<?php echo base_url("providers/getprovider");?>",{loc_name:loc,area_name:area,district:dt,dtype:type,certno:certno},function(data){
 				

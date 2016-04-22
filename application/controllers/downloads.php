@@ -20,6 +20,7 @@ class Downloads extends CI_Controller {
 		//page renew
         $renew = array("page_id"=>89);
         $this->session->set_userdata('pages',$renew);
+        $this->agreement = $session_data['agreement_no'];
     }
     
     function maintemp($temp,$data){
@@ -88,7 +89,10 @@ class Downloads extends CI_Controller {
             $id = $this->uri->segment(3);        
             $logo=$this->model_portal_admin->deactivateDownload($id);
             if($logo){         
+                
+                $cert = $session_data['certid'];
                 $this->load->library('archive');
+                $this->archive->addAudit($cert,'download','deactivate','0',$this->agreement);
                 $this->archive->addAudit($session_data['user_id'],'download','deactivate','1',$session_data['agreement_no']);
                 redirect(base_url("downloads"));
             }else{

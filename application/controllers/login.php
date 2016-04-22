@@ -117,10 +117,10 @@ class Login extends CI_Controller {
                         $check_login = 1;
                         $agreement = "PC10889";
                     }
-                    if((string)$memdetails->CertNo=="A03WOL0"){
-                        $check_login = 1;
-                        $agreement = "PC10889";
-                    }
+                    //if((string)$memdetails->CertNo=="A03WOL0"){
+                    //    $check_login = 1;
+                    //    $agreement = "PC10889";
+                    //}
                     //print_r("agreement "+$agreement);
                     $check_hra = $this->model_portal_admin->checkHRA($agreement);
                     $hra = 0;
