@@ -246,5 +246,4 @@ class Model_portal_users extends CI_Model{
 	
 }
 
-
 ?>

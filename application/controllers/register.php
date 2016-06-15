@@ -47,7 +47,7 @@ class Register extends CI_Controller {
             $check =$this->model_portal_admin->checkAgreement((string)$validate->AgreementNo);
             if($check==1){
                 if($validate->SuccessFlag=="True"){
-                //validating user
+                //validating users
                 //check if allowed to register
                      $data['philerror']=false;							
                     $data['info'] = $memdetails;  
@@ -64,9 +64,7 @@ class Register extends CI_Controller {
             }else{
                 $data['error_registration'] = "Access to this portal is limited. Please download PhilCare Go!Mobile app on iOS store or Google play to view your PhilCare benefits";
                 $this->load->view("registration",$data);
-            }
-            
-            
+            }                        
             //}
         }elseif(isset($_REQUEST['submit_2'])){
             
@@ -80,11 +78,11 @@ class Register extends CI_Controller {
                 $data['message_success'] = $registertoPhilLive->Message;
                 $this->load->view("valid_cert_reg",$data);
                 $this->load->library('archive');
-                $cert = $session_data['certid'];
+                $cert = $_POST['CertNo'];
                 //$this->archive->addAudit($_POST['CertNo'],'register','index','0',$memdetails->AgreementNo);
                 $this->archive->addAudit($cert,'register','view','0',$this->agreement);
             }
-        } elseif(isset($_REQUEST['resend_email'])){
+        }elseif(isset($_REQUEST['resend_email'])){
             $getInfo = $this->wslibrary->getMembersInfo($_REQUEST['CertNo']);
             $_REQUEST['Email'] = $_REQUEST['resend_email'];		
             $_REQUEST['user_id'] = $_REQUEST['user_id'];	
@@ -102,8 +100,7 @@ class Register extends CI_Controller {
         }else{
             //$resp = recaptcha_check_answer($privatekey,$_SERVER["REMOTE_ADDR"],$_POST["recaptcha_challenge_field"],$_POST["recaptcha_response_field"]);
             $data['recaptcha_html'] = recaptcha_get_html($publickey);
-            $this->load->view("registration",$data);			
-
+            $this->load->view("registration",$data);
         }       
     }
     
@@ -353,9 +350,10 @@ class Register extends CI_Controller {
         $memdetails = $this->wslibrary->getMembersInfo($certNo);
         
         $data['check'] = $this->wslibrary->verifyUser($certNo,$username,$registrationCode,$memdetails->AgreementNo);
-        $cert = $session_data['certid'];
+        //$cert = $session_data['certid'];
                 //$this->archive->addAudit($_POST['CertNo'],'register','index','0',$memdetails->AgreementNo);
-		$this->archive->addAudit($cert,'register','verify','0',$this->agreement);
+        $this->load->library('archive');
+		$this->archive->addAudit($certNo,'register','verify','0',$this->agreement);
 
         $this->load->view("verified",$data);	
     }

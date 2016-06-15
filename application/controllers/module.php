@@ -55,6 +55,7 @@ class Module extends CI_Controller {
                 "provider"              =>  $_POST['provider'],
                 "ecu"                   =>  $_POST['ecu'],
                 "reimbursement"         =>  $_POST['reimbursement'],
+                "hra"                   => $_POST['hra'],
                 "status"                =>  1
             );
             $insert = $this->model_portal_admin->insertModule($data);
@@ -79,7 +80,8 @@ class Module extends CI_Controller {
                 "newsfeed"              =>  $_POST['newsfeed'],
                 "provider"              =>  $_POST['provider'],
                 "ecu"                   =>  $_POST['ecu'],
-                "reimbursement"         =>  $_POST['reimbursement']
+                "reimbursement"         =>  $_POST['reimbursement'],
+                "hra"                   => $_POST['hra']
 			);
             $id = $_POST['module_id'];
             $this->model_portal_admin->updateModule($id,$data);

@@ -76,6 +76,7 @@ class Ecu extends CI_Controller {
                 //because webservice is not ready yet
                 $classification =$session_data['MemberClassification'];
                 $member_type = $session_data['MemberType'];
+                                
                  /*
                   * 
                 SR MANAGERS W/ MAT
@@ -103,9 +104,23 @@ class Ecu extends CI_Controller {
                         $apeecu = "ECU";
                     }elseif($classification=="DIRECTORS W/O MAT"){
                         $apeecu = "ECU";
+                    }elseif($classification == "TENURED SR MANAGERS W/ MAT"){
+                        $apeecu = "ECU";                        
+                    }elseif($classification == "TENURED SR MANAGERS W/O MAT"){
+                        $apeecu = "ECU"; 
+                    }elseif($classification == "TENURED DIRECTORS W/ MAT"){
+                        $apeecu = "ECU"; 
+                    }elseif($classification == "TENURED DIRECTORS W/O MAT"){
+
                     }else{
                         $apeecu = "";
                     }
+
+                    if($session_data['certid']=="7346920"){
+                        //$classification = "TENURED SR MANAGERS W/ MAT";
+                        $apeecu = "ECU";
+                    }
+
                 }elseif($member_type=="DEPENDENT"){
                    
                     if($classification=="DEPS OF DIRECTORS & SR MANAGERS W/MAT"){
@@ -129,9 +144,14 @@ class Ecu extends CI_Controller {
                     }
 
                 }
+
+                if($session_data['certid']==5443460){
+                    $apeecu = "ECU";
+                }
                 $data['classfication'] = $classification;
                 $data['member_type'] = $member_type;
                 $data['apeecu'] = $apeecu;
+                $data['agreement'] = $session_data['agreement_no'];
                 $this->maintemp('ecu',$data);
             }else{
                 $this->session->set_flashdata('error_access', 'You are not allowed to access that area!');

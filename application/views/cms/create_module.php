@@ -21,6 +21,7 @@
                                 <th></th>
                                 <th></th>
                                 <th></th>
+                                <th></th>
                             </tr>
                         </thead>
                     </table>
@@ -71,6 +72,16 @@
                                 <label class="col-sm-2 control-label">Reimbursement</label>
                                 <div class="col-sm-10">
                                     <select class="form-control col-sm-10" id="sel1" name="reimbursement">
+                                        <option value="1">Yes</option>
+                                        <option value="0">No</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">HRA</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control col-sm-10" id="sel1" name="hra">
                                         <option value="1">Yes</option>
                                         <option value="0">No</option>
                                     </select>

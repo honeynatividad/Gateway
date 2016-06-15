@@ -24,6 +24,7 @@
                             <th>Provider</th>
                             <th>ECU</th>
                             <th>Reimbursement</th>
+                            <th>HRA</th>
                             <th>Status</th>
                             <th>Action</th>
                             <?php    
@@ -68,6 +69,16 @@
                                         echo 'No';
                                     }
                                     ?>
+                                </td>
+                                <td>
+                                    <?php
+                                    if($module->hra == 1){
+                                        echo 'Yes';
+                                    }else{
+                                        echo 'No';
+                                    }
+                                    ?>
+
                                 </td>
                                 <td>
                                     <?php

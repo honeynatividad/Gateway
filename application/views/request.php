@@ -53,6 +53,20 @@
                                 <p><textarea class="form-control fcntrl" name="description" required></textarea></p>                                
                             </div>
                         </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="inputEmail3"></label>
+                            <div class="col-sm-10">
+                                <div class="radio">
+                                    <label><input type="radio" name="others" value="HIB">HIB (Hospital Income Benefit) – reimbursement for excess in room and board on confinements due accident
+</label>
+                                </div>
+                                <div class="radio">
+                                    <label><input type="radio" name="others" value="HMO">HMO – General Reimbursement Request
+</label>
+                                </div>
+                            </div>
+                        </div>
                         
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="inputEmail3">Attachment</label>

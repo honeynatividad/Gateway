@@ -80,16 +80,26 @@
     <div class="philloginbody">
     <!-- Page Content -->
     <div class="container" id="philbody">
-        <div class="row">
-            <div class="col-md-3">
-            </div>
-            <div class="col-md-6">
-				<img src="<?php echo base_url("resources");?>/img/logo_lg.png">
-            </div>		
-		</div>
- 
+      <div class="row">
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-6">
+				  <img src="<?php echo base_url("resources");?>/img/logo_lg.png">
+        </div>		
+        <div class="col-md-3">
+        </div>
+		  </div>
+      <div class="try-reset">
+        <p>&nbsp;</p>
+        <div class="row alert alert-warning2">
+                    
+          <p class="t2">If you are an existing PhilCare Go!Mobile user, no registration is required. You may be directly proceed to access the portal by using your PhilCare Go!Mobile account.</p>
+        
+        </div>
+      </div>
         <div class="row">
             <div class="headlogininfo">
+
                 <div class="col-md-3"></div>
                 <div class="col-md-6 " id="validate_anchor">
                     

@@ -88,6 +88,7 @@ class Reimbursement extends CI_Controller {
                         //$this->session->set_flashdata('upload_ok', $msg_ok);
                         $request_date= $_POST['ev_date'];
                         $description = $_POST['description'];
+                        $others = $_POST['others'];
                         $attachment = $target_file;
 						
                         $d = array(
@@ -95,7 +96,8 @@ class Reimbursement extends CI_Controller {
                             "description"           =>  $description,
                             "attachment_file"       =>  $target_file,
                             "status"                =>  1,
-                            "cert_no"               =>  $this->certid
+                            "cert_no"               =>  $this->certid,
+                            "others"                => $others
                         );
 						
 						$file_path = 'http://'.$_SERVER['HTTP_HOST'].'/gateway/resources/reimbursement/'.$_POST['agreement_no'].'/'.basename($_FILES["fileToUpload"]["name"]);
@@ -181,6 +183,7 @@ class Reimbursement extends CI_Controller {
 		<p><b>MIDDLE INITIAL:</b> ".$session_data['MiddleInitial']."</p>
 		<p><b>EMAIL ADDRESS:</b> ".$session_data['EmailAdd']."</p>
 		<p><b>DESCRIPTION:</b> ".$d['description']."</p>
+        <p><b>Reimbursement Type:</b> ".$d['others']."</p>
 		<p><b>Mobile No:</b> ".$session_data['ContactNo']."</p>
         <div>Sincerely,<br>PhilCare</div><br>
         

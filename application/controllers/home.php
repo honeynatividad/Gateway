@@ -27,27 +27,27 @@ class Home extends CI_Controller {
 	
 	function index(){            
           
-            $this->load->model("model_portal_admin");
-            $session_data = $this->session->userdata('logged_in');
-            if(isset($session_data['hra'])){
-                if($session_data['hra']==1){
-                    redirect('hra');
-                }
+        $this->load->model("model_portal_admin");
+        $session_data = $this->session->userdata('logged_in');
+        /*if(isset($session_data['hra'])){
+        	if($session_data['hra']==1){
+            	redirect('hra');
             }
+        }*/
             
-            $id = $session_data['agreement_no'];
-            $data['warning'] =$this->session->flashdata('error_access');
-            $data['id'] = $id;
-            $data['newsfeed'] = $this->model_portal_admin->getallNewsHome($id); 
-            $data['videos'] = $this->model_portal_admin->getAllVideoActive($id);
-            $data['guidebooks'] = $this->model_portal_admin->getGuidebookActive($id);
+        $id = $session_data['agreement_no'];
+        $data['warning'] =$this->session->flashdata('error_access');
+        $data['id'] = $id;
+        $data['newsfeed'] = $this->model_portal_admin->getallNewsHome($id); 
+        $data['videos'] = $this->model_portal_admin->getAllVideoActive($id);
+        $data['guidebooks'] = $this->model_portal_admin->getGuidebookActive($id);
             //$this->load->view('header',$data);
-            $this->maintemp('newsfeed',$data);
+        $this->maintemp('newsfeed',$data);
 	}
    
 	function logout(){
-	   $this->session->unset_userdata('logged_in');
-	   redirect('home', 'refresh');
+		$this->session->unset_userdata('logged_in');
+	   	redirect('home', 'refresh');
 	}
 	
 	function tilefeed(){

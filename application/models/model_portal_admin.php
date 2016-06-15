@@ -132,7 +132,7 @@ class Model_portal_Admin extends CI_Model{
     }
 
     function getallNews(){
-        $q = $this->db->query("SELECT * FROM portal_news");
+        $q = $this->db->query("SELECT * FROM portal_news ORDER BY created DESC");
         $this->db->close();
         return $q->result();
     }
@@ -143,7 +143,7 @@ class Model_portal_Admin extends CI_Model{
     }
     
     function getAllNewsActive($id){
-        $q = $this->db->query("SELECT * FROM portal_news WHERE agreement_no='$id'");
+        $q = $this->db->query("SELECT * FROM portal_news WHERE agreement_no='$id' ORDER BY created DESC");
         $this->db->close();
         return $q->result();
     }
@@ -160,20 +160,20 @@ class Model_portal_Admin extends CI_Model{
         return true;
     }
     function getallNewsHome($id){
-        $q = $this->db->query("SELECT * FROM portal_news WHERE status='1' AND is_video='0' AND agreement_no='$id'");
+        $q = $this->db->query("SELECT * FROM portal_news WHERE status='1' AND is_video='0' AND agreement_no='$id' ORDER BY created DESC");
         $this->db->close();
         $this->db->close();
         return $q->result();
     }
 
     function getNewsfeed($id){
-        $q = $this->db->query("SELECT * FROM portal_news WHERE news_id='$id'");
+        $q = $this->db->query("SELECT * FROM portal_news WHERE news_id='$id' ORDER BY created DESC");
         $this->db->close();
         return $q->result();
     }
 
     function deactivateNews($id){
-        $q = $this->db->query("UPDATE portal_news SET status='0' WHERE news_id='$id'");
+        $q = $this->db->query("UPDATE portal_news SET status='0' WHERE news_id='$id' ORDER BY created DESC");
         $this->db->close();
         return true;
     }

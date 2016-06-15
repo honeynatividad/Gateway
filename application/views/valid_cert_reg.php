@@ -400,7 +400,8 @@
         if (typeof val == "function") {
             return val.apply(ctx, args);
         } else {
-            return val;
+            return val;.
+            
         }
     }
 

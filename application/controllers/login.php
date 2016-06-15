@@ -101,13 +101,13 @@ class Login extends CI_Controller {
                         $check_login = 1;
                         
                     }
-                    if((string)$memdetails->CertNo=="5443460"){
+                    /*if((string)$memdetails->CertNo=="5443460"){
                         $check_login = 1;
                         $agreement = "PC10889";
-                    }
+                    }*/
                     if((string)$memdetails->CertNo=="7346920"){
                         $check_login = 1;
-                        $agreement = "PC10945";
+                        $agreement = "PC10889";
                     }
                     if((string)$memdetails->CertNo=="9999999"){
                         $check_login = 1;

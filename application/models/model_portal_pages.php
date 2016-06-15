@@ -70,6 +70,12 @@ class Model_portal_pages extends CI_Model{
             $count = $q->num_rows();
             return $count;
         }
+
+        function checkHRAModule($id){
+            $q = $this->db->query("SELECT * FROM portal_module WHERE status='1' AND agreement_no='$id' AND hra='1'");
+            $count = $q->num_rows();
+            return $count;
+        }
         
 	function getUserById($id){
 		$q = $this->db->query("SELECT * FROM portal_users WHERE user_id=$id");		

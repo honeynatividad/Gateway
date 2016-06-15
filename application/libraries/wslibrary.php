@@ -616,7 +616,7 @@ class wslibrary {
         
         
         $url = $_SERVER['webservicemobile'].'/Providers.svc/FindProviders/?Type='.$type.'&City='.$city.'&District='.$distct.'&Hospital='.$hospital.'&Top=100&CertNo='.$certno;
-        //print_r($url);
+        print_r($url);
         //$url = 'https://apps.philcare.com.ph/iPhilCare_Mobile/Providers.svc/FindProviders/?Type=Dialysis&City=&District=&Hospital=&Top=100&CertNo=5443460';
        // try {
             $xml = @simplexml_load_file($url,'SimpleXMLElement', LIBXML_NOWARNING);

@@ -43,7 +43,26 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group">                            
+                        <div class="form-group">  
+                        <?php if($agreement == 'PC10889' || $agreement == 'PC10917' || $agreement == 'PC10939'){ ?>
+                            <div class="col-sm-10">
+                                <div class="input-group">
+                                    <div class="metro">
+                                        <select class="form-control" id="dsctval" name="district">
+                                            <option value="0" class="label">PROVIDER'S NAME</option>
+                                            <option value="66">Asian Hospital & Medical Center</option>
+                                            <option value="141"> Capitol Medical Center</option>
+                                            <option value="145">Cardinal Santos Medical Center</option>
+                                            <option value="494">Makati Medial Center</option>
+                                            <option value="894">SLMC-GC</option>
+                                            <option value="891">SLMC_ QC</option>
+                                            <option value="947">The Medical City- Ortigas</option>
+                                            <option value="1375">The Medical City- Clark</option>
+                                        </select>
+                                    </div>   
+                                </div><!-- /input-group -->
+                            </div>
+                            <?php }else{?>                          
                             <div class="col-sm-5 ">
                                 <div class="input-group">
                                     <div class="metro">
@@ -65,6 +84,7 @@
                                     </div>  
                                 </div><!-- /input-group -->
                             </div>
+                            
                             <div class="col-sm-5">
                                 <div class="input-group" id="distrct_rep">
                                     <div class="metro">
@@ -74,6 +94,7 @@
                                     </div>   
                                 </div><!-- /input-group -->
                             </div>
+                            <?php } ?>
                             <div class="col-lg-2">
                                 <div class="lloading"></div>
                             </div>
@@ -123,7 +144,7 @@ $(document).ready(function(){
     $('.datepicker').datepicker({
         format: 'mm/dd/yyyy',
         todayHighlight:'TRUE',
-        startDate: '-0d',
+        startDate: '+10d',
         autoclose: true,
     });
     $("#availment").change(function(){

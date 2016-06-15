@@ -21,6 +21,7 @@
                                 <th></th>
                                 <th></th>
                                 <th></th>
+                                <th></th>
                             </tr>
                         </thead>
                     </table>
@@ -122,6 +123,30 @@
                                         </option>
                                         <?php 
                                             if($r->reimbursement == 1){
+                                        ?>                                        
+                                        <option value="0">No</option>
+                                        <?php 
+                                            }else{
+                                        ?>
+                                        <option value="1">Yes</option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">HRA</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control col-sm-10" id="sel1" name="hra">
+                                        <option value="<?php echo $r->reimbursement ?>">
+                                            <?php 
+                                                if($r->hra == 1) 
+                                                    echo 'Yes';
+                                                else
+                                                    echo 'No';
+                                            ?>
+                                        </option>
+                                        <?php 
+                                            if($r->hra == 1){
                                         ?>                                        
                                         <option value="0">No</option>
                                         <?php 

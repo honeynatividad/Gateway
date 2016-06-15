@@ -20,6 +20,7 @@ class Login extends CI_Controller {
          }		
     }
     function index(){
+        
         $this->verify();
          
     }
@@ -100,10 +101,10 @@ class Login extends CI_Controller {
                         $check_login = 1;
                         
                     }
-                    /*if((string)$memdetails->CertNo=="5443460"){
+                    if((string)$memdetails->CertNo=="5443460"){
                         $check_login = 1;
                         $agreement = "PC10889";
-                    }*/
+                    }
                     if((string)$memdetails->CertNo=="7346920"){
                         $check_login = 1;
                         $agreement = "PC10945";
@@ -112,8 +113,16 @@ class Login extends CI_Controller {
                         $check_login = 1;
                         $agreement = "PC10889";
                     }
+                    if((string)$memdetails->CertNo=="A04HRV0"){
+                        $check_login = 1;
+                        $agreement = "PC10889";
+                    }
+                    //if((string)$memdetails->CertNo=="A03WOL0"){
+                    //    $check_login = 1;
+                    //    $agreement = "PC10889";
+                    //}
                     //print_r("agreement "+$agreement);
-					$check_hra = $this->model_portal_admin->checkHRA($agreement);
+                    $check_hra = $this->model_portal_admin->checkHRA($agreement);
                     $hra = 0;
                     if($check_login==1){                        
                         if($check_hra==1 && $check_member==0){
@@ -133,7 +142,9 @@ class Login extends CI_Controller {
                             "MessageReturn"=>$phil->MessageReturn,
                             "RegistrationCode"=>$phil->RegistrationCode,
                             "SuccessFlag"=>$phil->SuccessFlag,
-                            "UserName"=>$phil->UserName);	
+                            "UserName"=>$phil->UserName,
+                            "MemberType"=>$phil->MemberType,
+                            "MemberClassification"=>$phil->MemberClassification);	
                         $newarray['password']=$password;
                         $newarray['prepaid']=$pa_account;
 
@@ -155,11 +166,15 @@ class Login extends CI_Controller {
                             'agreement_no' => $agreement,
                             'hra' => $hra,
                             'MemberCertNo' => (string)$phil->CertNo,
-							'FirstName' => (string)$memdetails->FirstName,
-							'LastName' => (string)$memdetails->LastName,
-							'MiddleInitial' => (string)$memdetails->MiddleName,
-							'PolicyNo' => (string)$memdetails->PolicyNo,
-							'EmailAdd' => (string)$memdetails->Email
+                            'FirstName' => (string)$memdetails->FirstName,
+                            'LastName' => (string)$memdetails->LastName,
+                            'MiddleInitial' => (string)$memdetails->MiddleName,
+                            'PolicyNo' => (string)$memdetails->PolicyNo,
+                            'EmailAdd' => (string)$memdetails->Email,
+                            'MemberType'    => (string)$memdetails->MemberType,
+                            'APEECU'  => (string)$memdetails->APEECU,
+                            'ContactNo' => (string)$memdetails->ContactNumber,
+                            'MemberClassification' => (string)$memdetails->MemberClassification
                         );                    
 
                         $this->session->set_userdata('logged_in', $sess_array);                        
@@ -179,6 +194,7 @@ class Login extends CI_Controller {
                             setcookie('remember_me_checked');
                         }
                     }else{
+                        $this->form_validation->set_message('check_database', 'Access to this portal is limited. Please download PhilCare Go!Mobile app on iOS store or Google play to view your PhilCare benefits.');
                         return false;
                     }
                 }else{
