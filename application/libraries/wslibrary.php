@@ -580,7 +580,60 @@ class wslibrary {
             return false;
         }
     }
-
+    
+    function getNewDistrict($province){        
+        $url = $_SERVER['newwebservice']."/Location.svc/District/?ProvinceCode=".$province;
+        $string = file_get_contents($url);
+        $json_a = json_decode($string, true);
+        return $json_a;
+    }
+    
+    function getProvince($region){
+        $url = $_SERVER['newwebservice']."/Location.svc/Province/?RegionCode=".$region;
+        $string = file_get_contents($url);
+        $json_a = json_decode($string, true);
+        return $json_a;
+    }
+    
+    function getDentistSchedule($code){
+        $url = $_SERVER['newwebservice']."/Provider.svc/DentalProviderDoctorsSchedule/?ClinicCode=".$code;
+        //print_r($url);
+        $string = file_get_contents($url);
+        $json_a = json_decode($string, true);
+        return $json_a;
+    }
+    function getRegion($state){
+        $url = $_SERVER['newwebservice']."/Location.svc/Region/?Division=".$state;
+        //$url = 'https://apps.philcare.com.ph/PCareWebServicesTest/Providers.svc/SearchDoctors/?CertNo=5443460&Province=METRO+MANILA&Area=TAGUIG+CITY&DoctorName=&Specialization=INTERNAL+MEDICINE';
+        //print_r($url);
+        $string = file_get_contents($url);
+        $json_a = json_decode($string, true);
+        return $json_a;
+    }
+    function getProviderDentist($state,$region,$province,$district){
+        
+        if($state == "0"){
+            $state = "";            
+        }        
+        if($region == "0"){
+            $region = "";
+        }
+        if($province == "0"){
+            $province = "";
+        }
+        if($district == "0"){
+            $district = "";
+        }
+        
+        $url = $_SERVER['newwebservice']."/Provider.svc/DentalProviderClinics/?State=".urlencode($state)."&Region=".urlencode($region)."&Province=".urlencode($province)."&Area=".urlencode($district);
+        //$url = 'https://apps.philcare.com.ph/PCareWebServicesTest/Providers.svc/SearchDoctors/?CertNo=5443460&Province=METRO+MANILA&Area=TAGUIG+CITY&DoctorName=&Specialization=INTERNAL+MEDICINE';
+        //print_r($url);
+        $string = file_get_contents($url);
+        $json_a = json_decode($string, true);
+        return $json_a;
+        
+        
+    }
     function getNewSearchProvidersDoctors($city,$distct,$hospital,$type,$certno){
         //$url = 'https://apps.philcare.com.ph/PCareWebServicesTest/Providers.svc/Doctors/?CertNo=&Province=&Area=&LastName=&FirstName=&Specialization=';
         /*
@@ -591,6 +644,7 @@ class wslibrary {
         print_r("area is ".$city.": district is ".$distct.": doctor is ".$hospital." : specialization is ".$type);
          * 
          */
+      
         $url = $_SERVER['webservice'].'/Providers.svc/SearchDoctors/?CertNo='.$certno.'&Province='.$city.'&Area='.$distct.'&DoctorName='.$hospital.'&Specialization='.$type;
         //$url = 'https://apps.philcare.com.ph/PCareWebServicesTest/Providers.svc/SearchDoctors/?CertNo=5443460&Province=METRO+MANILA&Area=TAGUIG+CITY&DoctorName=&Specialization=INTERNAL+MEDICINE';
         $getxml = file_get_contents($url);

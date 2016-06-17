@@ -93,7 +93,7 @@
         <p>&nbsp;</p>
         <div class="row alert alert-warning2">
                     
-          <p class="t2">If you are an existing PhilCare Go!Mobile user, no registration is required. You may be directly proceed to access the portal by using your PhilCare Go!Mobile account.</p>
+          <p class="t2">If you are an existing PhilCare Go!Mobile user, no registration is required. You may directly proceed to access the portal by using your PhilCare Go!Mobile account.</p>
         
         </div>
       </div>
@@ -108,7 +108,7 @@
                     <form class="form-horizontal logform" method="POST" role="form" >
                         <div class="form-group">
 							<div class="col-sm-4 green_label">
-								<label>Username or Email Addressss</label>
+								<label>Username or Email Address</label>
 							</div>
                             <div class="col-sm-8">
                                 <input type="text" name="username" value="<?php echo isset($_COOKIE['remember_me_username'])?$_COOKIE['remember_me_username']:''; ?>" class="form-control" id="" placeholder="" required autofocus>

@@ -122,23 +122,23 @@ class Ecu extends CI_Controller {
                     }
 
                 }elseif($member_type=="DEPENDENT"){
-                   
-                    if($classification=="DEPS OF DIRECTORS & SR MANAGERS W/MAT"){
-                        $apeecu = "ECU";
-                    }elseif($classification=="DEPS OF DIRECTORS & SR MANAGERS W/O MAT"){
-                        $apeecu = "ECU";
-                    }elseif($classification=="DEPS OF MANAGERS W/MAT"){
-                        $apeecu = "APE";
-                    }elseif($classification=="DEPS OF MANAGERS W/O MAT"){
-                        $apeecu = "APE";
-                    }elseif($classification=="DEPS OF RANK & FILE W/ MAT"){
-                        $apeecu = "APE";
-                    }elseif($classification=="DEPS OF RANK & FILE W/O MAT"){
-                        $apeecu = "APE";
-                    }elseif($classification=="DEPS OF SUPERVISORS W/ MAT"){
-                        $apeecu = "APE";
-                    }elseif($classification=="DEPS OF SUPERVISORS W/O MAT"){
-                        $apeecu = "APE";
+                   //10917
+                    if($session_data['agreement_no']=="10917"){
+                        if($classification=="DEPS OF DIRECTORS & SR MANAGERS W/MAT"){
+                            $apeecu = "APE";
+                        }elseif($classification=="DEPS OF DIRECTORS & SR MANAGERS W/O MAT"){
+                            $apeecu = "APE";
+                        }elseif($classification=="DEPS OF MANAGERS W/MAT"){                        
+                            $apeecu = "APE";
+                        }elseif($classification=="DEPS OF MANAGERS W/O MAT"){
+                            $apeecu = "APE";
+                        }
+                    //if($classification=="DEPS OF DIRECTORS & SR MANAGERS W/MAT"){
+                    //    $apeecu = "ECU";
+                    //}elseif($classification=="DEPS OF DIRECTORS & SR MANAGERS W/O MAT"){
+                    //    $apeecu = "ECU";
+                    //}elseif($classification=="DEPS OF MANAGERS W/MAT"){
+                    
                     }else{
                         $apeecu = "";
                     }
@@ -154,7 +154,8 @@ class Ecu extends CI_Controller {
                 $data['agreement'] = $session_data['agreement_no'];
                 $this->maintemp('ecu',$data);
             }else{
-                $this->session->set_flashdata('error_access', 'You are not allowed to access that area!');
+                
+                $this->session->set_flashdata('error_access', 'Please verify the Onsite APE schedule at the onsite clinic.');
                 redirect('home','refresh');
             }            
             

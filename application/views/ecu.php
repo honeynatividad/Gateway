@@ -16,7 +16,12 @@
         <div class="panel-body">
             <div class="col-md-12">
                 <?php if($apeecu==""){ ?>
-                <div class="alert alert-danger"> Please contact HR to schedule an appointment </div>
+                
+                    <p>Online appointment request is applicable to the following:</p>
+                    <p>a. Executive Check – up (ECU) appointment  - limited to Senior Manager level and above</p>
+                    <p>b. Annual Physical Examination (APE) for dependents – exclusive to Manager level and above who availed of company-sponsored plan</p> 
+
+                    <p><i><span style="color: #ff0000">*</span> not applicable to Rank and File to Manager level. Please verify the Onsite APE schedule at the onsite clinic.</i></p>
                 <?php }else{?>
                 
                 <form method="POST" action="" class="form-horizontal">

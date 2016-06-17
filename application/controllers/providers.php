@@ -6,6 +6,7 @@ class Providers extends CI_Controller {
 	private $certid;
         private $agreement;
 	function __construct(){
+            
 		parent::__construct();	
 		$this->load->model("model_portal_users");
 		$this->load->model("model_portal_admin","admin");
@@ -454,8 +455,349 @@ class Providers extends CI_Controller {
         $this->archive->addAudit($this->certid,'providers','find a doctor','0',$this->agreement);
         $this->maintemp('find_doctor',$data);
     }
-	
-}
+    
+    function find_dentist(){
+        $data['provinces'] = $this->wslibrary->getCities();
+        $data['userid'] = $this->user;
+        $this->load->model("model_portal_admin");
+        $this->load->library('archive');
+        $this->archive->addAudit($this->certid,'providers','find a dentist','0',$this->agreement);
+        $this->maintemp('find_dentist',$data);        
+    }
+    
+    function getRegion(){
+        if(isset($_POST['state'])){
+            $state = $_POST['state'];
+            
+            $regions = $this->wslibrary->getRegion($state);
+            $count = count($regions['RegionResult']);
+        ?>
+            <input type="hidden" name="region_code" value="<?php ?>">
+            <select class="dval form-control" id="dregion" name="region">
+                <option value="0">-REGION-</option>
+                <?php for($x = 0;$x<$count;$x++): ?>
+                <option value="<?php echo $regions['RegionResult'][$x]['RegionCode'] ?>|<?php echo $regions['RegionResult'][$x]['RegionDesc'] ?>"><?php echo $regions['RegionResult'][$x]['RegionDesc'] ?></option>
+                <?php endfor; ?>
+            </select>
+        <?php
+        }
+    }
+    function getProvince(){
+        if(isset($_POST['region'])){
+            $region = $_POST['region'];
+            
+            $result_explode = explode('|', $region);
+            $code = $result_explode[0];            
+            
+            $provinces = $this->wslibrary->getProvince($code);
+            $count = count($provinces['ProvinceResult']);
+        ?>
+            <select class="dval form-control" id="area_name" name="area_name">
+                <option value="0">-PROVINCE-</option>
+                <?php for($x = 0;$x<$count;$x++): ?>
+                <option value="<?php echo $provinces['ProvinceResult'][$x]['ProvinceCode'] ?>|<?php echo $provinces['ProvinceResult'][$x]['ProvinceDesc'] ?>"><?php echo $provinces['ProvinceResult'][$x]['ProvinceDesc'] ?></option>
+                <?php endfor; ?>
+            </select>
+        <?php
+        }
+    }
+    
+    function getDistrict(){
+        if(isset($_POST['province'])){
+            $province = $_POST['province'];
+            $result_explode = explode('|', $province);
+            $code = $result_explode[0];           
+            $districts = $this->wslibrary->getNewDistrict($code);
+            $count = count($districts['DistrictResult']);
+        ?>
+            <select class="dval form-control" id="district" name="district">
+                <?php for($x = 0;$x<$count;$x++): ?>
+                <option value="<?php echo $districts['DistrictResult'][$x]['DistrictCode'] ?>|<?php echo $districts['DistrictResult'][$x]['DistrictDesc'] ?>"><?php echo $districts['DistrictResult'][$x]['DistrictDesc'] ?></option>
+                <?php endfor; ?>
+            </select>
+        <?php
+        }
+    }
+    function getProvider_dentist(){
+        if(isset($_REQUEST['district'])){  
+            $this->load->library('pagination');
+            $state = $_POST['state'];
+            $region = $_POST['region'];
+            $province = $_POST['province'];
+            $district = $_POST['district'];
+            //print_r("state is ".$state.": region is ".$region.": province is ".$province.": district is ".$district);
+            $providers = $this->wslibrary->getProviderDentist($state,$region,$province,$district);
+            $c = count($providers['DentalProviderClinicsResult']);
+            //print_r("total s ".$c);
+            ?>
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Clinic Name</th>
+                        <th>Contact Number</th>
+                        <th>Address</th>
+                        <th>District/City</th>
+                        <th>Province</th>
+                        <th>Region</th>
+                        <th>State</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>Clinic Name</th>
+                        <th>Contact Number</th>
+                        <th>Address</th>
+                        <th>District/City</th>
+                        <th>Province</th>
+                        <th>Region</th>
+                        <th>State</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+            <?php
+           
+                $count = $c;
+               
+                if($count == "0"){
+                    
+                }else{
+                    $config['base_url'] = base_url('providers/find_dentist_paginate/'.$state.'/'.$region.'/'.$province.'/'.$district.'');
+                    $config["total_rows"] = $count;
+                    $config['per_page'] = "20";
+                    $config["uri_segment"] = 7;
+                    $choice = $config["total_rows"] / $config["per_page"];
+                    $config["num_links"] = floor($choice);
 
+                    //config for bootstrap pagination class integration
+                    $config['full_tag_open'] = '<ul class="pagination">';
+                    $config['full_tag_close'] = '</ul>';
+                    $config['first_link'] = false;
+                    $config['last_link'] = false;
+                    $config['first_tag_open'] = '<li>';
+                    $config['first_tag_close'] = '</li>';
+                    $config['prev_link'] = '&laquo';
+                    $config['prev_tag_open'] = '<li class="prev">';
+                    $config['prev_tag_close'] = '</li>';
+                    $config['next_link'] = '&raquo';
+                    $config['next_tag_open'] = '<li>';
+                    $config['next_tag_close'] = '</li>';
+                    $config['last_tag_open'] = '<li>';
+                    $config['last_tag_close'] = '</li>';
+                    $config['cur_tag_open'] = '<li class="active"><a href="#">';
+                    $config['cur_tag_close'] = '</a></li>';
+                    $config['num_tag_open'] = '<li>';
+                    $config['num_tag_close'] = '</li>';
+
+                    $this->pagination->initialize($config);
+                    if($this->uri->segment(7)){
+                        $page = ($this->uri->segment(7)) ;
+                        $start = ($this->uri->segment(7)) ;
+                    }
+                    else{
+                        $page = 20;
+                        $start = 0;
+                    }
+                    
+                    $str_links = $this->pagination->create_links();
+                    $data["links"] = explode('&nbsp;',$str_links );
+                    
+                                   
+                    $s = 0 + $start;
+                    //print_r($providers['DentalProviderClinicsResult']);                
+                    $total = $count;
+                    if($count <= 1){
+                        $total = 1;
+                        
+                    }else{
+                        if($total<=20){
+                            $total = $c;
+                        }else{
+                            $total = $start + 20;
+                        }
+                        
+                    }                   
+                    for($x=$s; $x<$total; $x++){
+                      
+                ?>
+                        <tr>
+                            <td><a href="#" id="<?php echo $providers['DentalProviderClinicsResult'][$x]['ClinicCode'] ?>" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal"><?php echo $providers['DentalProviderClinicsResult'][$x]['ProviderName'] ?></a></td>
+                            <td><?php echo $providers['DentalProviderClinicsResult'][$x]['ContactNumber'] ?></td>
+                            <td><?php echo $providers['DentalProviderClinicsResult'][$x]['Address'] ?></td>
+                            <td><?php echo $providers['DentalProviderClinicsResult'][$x]['DistCity'] ?></td>
+                            <td></td>
+                            <td><?php echo $providers['DentalProviderClinicsResult'][$x]['Region'] ?></td>
+                            <td><?php echo $providers['DentalProviderClinicsResult'][$x]['State'] ?></td>
+                        </tr>
+                <?php
+                    }
+                }
+            
+            ?>
+                </tbody>
+            </table>
+            <?php 
+                echo $this->pagination->create_links();
+                
+            ?>
+            <!-- Modal -->
+            <script>
+                $(document).ready(function(){
+                   $("a[data-toggle=modal]").click(function() {
+                        var clinic_id = $(this).attr('id');
+                    //alert(clinic_id);
+
+                $.post("<?php echo base_url("providers/getDentistSchedule");?>",
+
+                    {clinic:clinic_id},function(data){
+
+                        $('#myModal').show();
+                        $('#modalContent').show().html(data);
+
+                        $(".lloading").text('done');
+                });		
+
+
+            });
+        });
+                </script>
+                
+        <?php
+        }
+    }
+ 
+    function getDentistSchedule(){
+        if(isset($_POST['clinic'])){
+            $clinic = $_POST['clinic'];
+        
+        $schedules = $this->wslibrary->getDentistSchedule($clinic);
+        $count  = count($schedules['DentalProviderDoctorsScheduleResult']);
+       
+            
+        
+        ?>   
+           
+            <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Dentist Schedule</h4>
+                        </div>
+                        <div class="modal-body">
+                            <?php
+                             for($x=0; $x<$count; $x++){
+                            ?>
+                            <p>Dentist Name: <?php echo $schedules['DentalProviderDoctorsScheduleResult'][$x]['FirstName']." ".$schedules['DentalProviderDoctorsScheduleResult'][$x]['LastName'] ?></p>
+                            <p>Schedule: <?php echo $schedules['DentalProviderDoctorsScheduleResult'][$x]['Schedule'] ?></p>
+                        </div>
+                            <?php
+                            }?>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+        <?php
+        }
+    }
+    function find_dentist_paginate(){
+        
+        $state = $this->uri->segment(3);
+        $region = urldecode($this->uri->segment(4));
+        $province = urldecode($this->uri->segment(5));
+        $district = urldecode($this->uri->segment(6));
+        $start = urldecode($this->uri->segment(7));
+        
+        $providers = $this->wslibrary->getProviderDentist($state,$region,$province,$district);
+        $c = count($providers['DentalProviderClinicsResult']);
+        //print_r("test============".$province);
+        //print_r("State is ".$state.": Region is".$region.": Province:".$province.":District is ".$district);
+        //print_r($providers);
+        $this->load->library('pagination');
+        
+        //foreach ($providers as $key => $value) {
+                $count = $c;
+                $config['base_url'] = base_url('providers/find_dentist_paginate/'.$state.'/'.$region.'/'.$province.'/'.$district.'');
+                $config["total_rows"] = $count;
+                $config['per_page'] = 20;
+                $config["uri_segment"] = 7;
+                $choice = $config["total_rows"] / $config["per_page"];
+                $config["num_links"] = floor($choice);
+
+                //config for bootstrap pagination class integration
+                $config['full_tag_open'] = '<ul class="pagination">';
+                $config['full_tag_close'] = '</ul>';
+                $config['first_link'] = false;
+                $config['last_link'] = false;
+                $config['first_tag_open'] = '<li>';
+                $config['first_tag_close'] = '</li>';
+                $config['prev_link'] = '&laquo';
+                $config['prev_tag_open'] = '<li class="prev">';
+                $config['prev_tag_close'] = '</li>';
+                $config['next_link'] = '&raquo';
+                $config['next_tag_open'] = '<li>';
+                $config['next_tag_close'] = '</li>';
+                $config['last_tag_open'] = '<li>';
+                $config['last_tag_close'] = '</li>';
+                $config['cur_tag_open'] = '<li class="active"><a href="#">';
+                $config['cur_tag_close'] = '</a></li>';
+                $config['num_tag_open'] = '<li>';
+                $config['num_tag_close'] = '</li>';
+                
+                $data['page'] = ($this->uri->segment(7)) ? $this->uri->segment(7) : 0;
+                
+                $this->pagination->initialize($config);
+                if($this->uri->segment(7)){
+                $page = ($this->uri->segment(7)) ;
+                $start = ($this->uri->segment(7)) ;
+                
+                }
+                else{
+                $page = 20 ;
+                $start = 0;
+                }
+                $getPaginate[$start] = array();
+                $str_links = $this->pagination->create_links();
+                $data["links"] = explode('&nbsp;',$str_links );
+                $data['start'] = $start;
+                //$data['page'] = $page;
+                $data['paginate'] = $this->pagination->create_links();
+               
+                /*for($x=$start;$x<=$page+20;$x++){
+                    $getPaginate[$x] = array(
+                        "ProviderName"      => $providers['DentalProviderClinicsResult'][$x]['ProviderName'],
+                        "Address"           => $providers['DentalProviderClinicsResult'][$x]['Address'],
+                        "ContactNumber"     => $providers['DentalProviderClinicsResult'][$x]['ContactNumber'],
+                        "DistCity"          => $providers['DentalProviderClinicsResult'][$x]['DistCity'],
+                        "Region"            => $providers['DentalProviderClinicsResult'][$x]['Region'],
+                        "State"             => $providers['DentalProviderClinicsResult'][$x]['State']
+                    );
+                }*/
+                
+        //}
+               // var_dump($providers['DentalProviderClinicsResult']);
+        $data['link_page'] = $this->pagination->create_links();
+        $data['getPaginate'] = $providers['DentalProviderClinicsResult'];
+        $data['provinces'] = $this->wslibrary->getCities();
+        $data['total'] = $c;
+        $data['userid'] = $this->user;
+        $this->load->model("model_portal_admin");
+        $this->load->library('archive');
+        $this->archive->addAudit($this->certid,'providers','find a dentist','0',$this->agreement);
+        $this->maintemp('find_dentist_paginate',$data);           
+        
+    }
+     
+    function copay(){
+        $data['provinces'] = $this->wslibrary->getCities();        
+        $data['userid'] = $this->user;
+        
+        $provinces = $this->wslibrary->getProvince();
+        
+        $this->load->model("model_portal_admin");
+        $this->load->library('archive');
+        $this->archive->addAudit($this->certid,'providers','copay','0',$this->agreement);
+        $this->maintemp('copay',$data);    
+    }
+    
+}
 
 ?>
