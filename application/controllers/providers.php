@@ -457,7 +457,9 @@ class Providers extends CI_Controller {
     }
     
     function find_dentist(){
-        $data['provinces'] = $this->wslibrary->getCities();
+        $x = "";
+        $data['provinces'] = $this->wslibrary->getProvince($x);
+        //print_r($this->wslibrary->getProvince($x));
         $data['userid'] = $this->user;
         $this->load->model("model_portal_admin");
         $this->load->library('archive');
@@ -521,14 +523,16 @@ class Providers extends CI_Controller {
     function getProvider_dentist(){
         if(isset($_REQUEST['district'])){  
             $this->load->library('pagination');
-            $state = $_POST['state'];
-            $region = $_POST['region'];
+            //$state = $_POST['state'];
+            //$region = $_POST['region'];
+            $state = "";
+            $region = "";
             $province = $_POST['province'];
             $district = $_POST['district'];
             //print_r("state is ".$state.": region is ".$region.": province is ".$province.": district is ".$district);
             $providers = $this->wslibrary->getProviderDentist($state,$region,$province,$district);
             $c = count($providers['DentalProviderClinicsResult']);
-            //print_r("total s ".$c);
+            //print_r($providers['DentalProviderClinicsResult'][0]);
             ?>
             <table id="example1" class="table table-bordered table-striped">
                 <thead>
@@ -539,27 +543,17 @@ class Providers extends CI_Controller {
                         <th>District/City</th>
                         <th>Province</th>
                         <th>Region</th>
-                        <th>State</th>
+                        
                     </tr>
                 </thead>
-                <tfoot>
-                    <tr>
-                        <th>Clinic Name</th>
-                        <th>Contact Number</th>
-                        <th>Address</th>
-                        <th>District/City</th>
-                        <th>Province</th>
-                        <th>Region</th>
-                        <th>State</th>
-                    </tr>
-                </tfoot>
+                
                 <tbody>
             <?php
            
                 $count = $c;
                
-                if($count == "0"){
-                    
+                if($count <= 1){
+                    //echo "zero";
                 }else{
                     $config['base_url'] = base_url('providers/find_dentist_paginate/'.$state.'/'.$region.'/'.$province.'/'.$district.'');
                     $config["total_rows"] = $count;
@@ -615,7 +609,8 @@ class Providers extends CI_Controller {
                             $total = $start + 20;
                         }
                         
-                    }                   
+                    }
+                    //echo $count;
                     for($x=$s; $x<$total; $x++){
                       
                 ?>
@@ -626,7 +621,7 @@ class Providers extends CI_Controller {
                             <td><?php echo $providers['DentalProviderClinicsResult'][$x]['DistCity'] ?></td>
                             <td></td>
                             <td><?php echo $providers['DentalProviderClinicsResult'][$x]['Region'] ?></td>
-                            <td><?php echo $providers['DentalProviderClinicsResult'][$x]['State'] ?></td>
+                            
                         </tr>
                 <?php
                     }
@@ -672,8 +667,6 @@ class Providers extends CI_Controller {
         $schedules = $this->wslibrary->getDentistSchedule($clinic);
         $count  = count($schedules['DentalProviderDoctorsScheduleResult']);
        
-            
-        
         ?>   
            
             <!-- Modal content-->
@@ -699,15 +692,18 @@ class Providers extends CI_Controller {
         }
     }
     function find_dentist_paginate(){
-        
-        $state = $this->uri->segment(3);
-        $region = urldecode($this->uri->segment(4));
-        $province = urldecode($this->uri->segment(5));
-        $district = urldecode($this->uri->segment(6));
-        $start = urldecode($this->uri->segment(7));
+        $xx = "";
+        $data['provinces'] = $this->wslibrary->getProvince($xx);
+        //print_r($this->wslibrary->getProvince($xx));
+        $state = "";
+        $region = "";
+        $province = urldecode($this->uri->segment(3));
+        $district = urldecode($this->uri->segment(4));
+        $start = urldecode($this->uri->segment(5));
         
         $providers = $this->wslibrary->getProviderDentist($state,$region,$province,$district);
         $c = count($providers['DentalProviderClinicsResult']);
+        
         //print_r("test============".$province);
         //print_r("State is ".$state.": Region is".$region.": Province:".$province.":District is ".$district);
         //print_r($providers);
@@ -718,7 +714,7 @@ class Providers extends CI_Controller {
                 $config['base_url'] = base_url('providers/find_dentist_paginate/'.$state.'/'.$region.'/'.$province.'/'.$district.'');
                 $config["total_rows"] = $count;
                 $config['per_page'] = 20;
-                $config["uri_segment"] = 7;
+                $config["uri_segment"] = 5;
                 $choice = $config["total_rows"] / $config["per_page"];
                 $config["num_links"] = floor($choice);
 
@@ -742,12 +738,12 @@ class Providers extends CI_Controller {
                 $config['num_tag_open'] = '<li>';
                 $config['num_tag_close'] = '</li>';
                 
-                $data['page'] = ($this->uri->segment(7)) ? $this->uri->segment(7) : 0;
+                $data['page'] = ($this->uri->segment(5)) ? $this->uri->segment(5) : 0;
                 
                 $this->pagination->initialize($config);
-                if($this->uri->segment(7)){
-                $page = ($this->uri->segment(7)) ;
-                $start = ($this->uri->segment(7)) ;
+                if($this->uri->segment(5)){
+                $page = ($this->uri->segment(5)) ;
+                $start = ($this->uri->segment(5)) ;
                 
                 }
                 else{
@@ -776,7 +772,7 @@ class Providers extends CI_Controller {
                // var_dump($providers['DentalProviderClinicsResult']);
         $data['link_page'] = $this->pagination->create_links();
         $data['getPaginate'] = $providers['DentalProviderClinicsResult'];
-        $data['provinces'] = $this->wslibrary->getCities();
+        
         $data['total'] = $c;
         $data['userid'] = $this->user;
         $this->load->model("model_portal_admin");
@@ -786,16 +782,48 @@ class Providers extends CI_Controller {
         
     }
      
-    function copay(){
-        $data['provinces'] = $this->wslibrary->getCities();        
+    function nocopay(){
+        
         $data['userid'] = $this->user;
         
-        $provinces = $this->wslibrary->getProvince();
-        
+    
+        $data['provinces'] = $this->wslibrary->getCities();
         $this->load->model("model_portal_admin");
         $this->load->library('archive');
         $this->archive->addAudit($this->certid,'providers','copay','0',$this->agreement);
-        $this->maintemp('copay',$data);    
+        //$this->maintemp('nocopay',$data);    
+        
+        
+        $this->load->library('CSVReader');
+        $result =   $this->csvreader->parse_file(base_url('resources').'/nocopay.csv');
+
+        $data['csvData'] =  $result;
+        $this->maintemp('nocopay',$data);    
+        
+    }
+    
+    function copay_district(){
+        if(isset($_POST['province'])){
+                    
+            $distct = $this->wslibrary->getDistrict($_POST['province']);
+            if($distct){
+            ?>
+            
+            <select class="dval form-control" id="districtvalue" name="region">
+                <option value="0">-DISTRICT-</option>
+                <?php
+                foreach($distct as $p){
+                    $namespaces = $distct->getNameSpaces(true);
+                    $list = $p->children($namespaces['a']);
+                    foreach($list as $li){
+                        $prov = $li->children($namespaces['a']);
+                    ?>
+                <option value="<?php echo urlencode($prov->District);?>"><?php echo $prov->District;?></option>
+                <?php }}?>
+            </select>
+            <?php
+            }
+        }
     }
     
 }

@@ -15,6 +15,36 @@ class wslibrary {
         
     }
     
+    function getLoaConsultation($certno,$providerCode,$doctorCode,$chiefComplaint,$serviceType){
+        //$url = "https://apps.philcare.com.ph/IPhilCareWSTest/LOA.svc/GenerateLOA/?TokenID=38412629-7A2D-424D-872E-68F16214826F&Certno=A03M0V0&ProviderCode=14&DoctorCode=8867&ChiefComplaint=TEST&ServiceType=CONSULTATION";
+        $url = $_SERVER['newwebservice']."/LOA.svc/GenerateLOA/?TokenID=38412629-7A2D-424D-872E-68F16214826F&Certno=".$certno."&ProviderCode=".$providerCode."&DoctorCode=".$doctorCode."&ChiefComplaint=".$chiefComplaint."&ServiceType=CONSULTATION";
+        $string = file_get_contents($url);
+        $json_a = json_decode($string, true);
+        return $json_a;       
+    }
+    
+    function getDiagnosis(){        
+        $url = $_SERVER['newwebservice']."/Diagnosis.svc/DiagList";
+        $string = file_get_contents($url);
+        $json_a = json_decode($string, true);
+        return $json_a;        
+    }
+    
+    function getProcedure($data){
+        $url = $_SERVER['newwebservice']."/Diagnosis.svc/DiagProcList/?DiagCode=".$data['code'];
+        $string = file_get_contents($url);
+        $json_a = json_decode($string, true);
+        return $json_a;        
+    }
+    
+    
+    public function getRank(){
+        $url = "https://apps.philcare.com.ph/IPhilCareWSTest/Teletech.svc/TELETECHAPEECUClassRank";
+        $string = file_get_contents($url);
+        $json_a = json_decode($string, true);
+        return $json_a;
+    }
+    
     public function feedback_send($data){
         //print_r($data);
         $url = $_SERVER['webservice']."/Members.svc/SendMembersFeedBack/?CertNo=".$data['cert_no']."&Category=".$data['category']."&SubCategory=".$data['sub_category']."&FeedBack=".$data['feedback'];
@@ -306,6 +336,15 @@ class wslibrary {
         }
         //        
     }
+    
+    function getAPEECU($agreement){        
+        $url = $_SERVER['newwebservice']."/Provider.svc/ECUProvidersListPerAccount/?AgreementNo=".$agreement;
+        $string = file_get_contents($url);
+        $json_a = json_decode($string, true);
+        return $json_a;
+        
+    }
+    
     
     function getOnlineAppointment($cert,$type,$req_date,$code){
         //$url = 'https://apps.philcare.com.ph/PCareWebServicesTest/Members.svc/OnlineScheduleAppointment/?CertNo=5443460&Type=APE&RequestDate=1/2/2016';
@@ -603,6 +642,9 @@ class wslibrary {
         return $json_a;
     }
     function getRegion($state){
+        if($state == "0"){
+            $state="";
+        }
         $url = $_SERVER['newwebservice']."/Location.svc/Region/?Division=".$state;
         //$url = 'https://apps.philcare.com.ph/PCareWebServicesTest/Providers.svc/SearchDoctors/?CertNo=5443460&Province=METRO+MANILA&Area=TAGUIG+CITY&DoctorName=&Specialization=INTERNAL+MEDICINE';
         //print_r($url);
@@ -633,6 +675,36 @@ class wslibrary {
         return $json_a;
         
         
+    }
+    
+    function getSearchHospitals($cert,$city,$hospital){
+        //https://apps.philcare.com.ph/PhilcareWatsonTest/Search.svc/SearchHospitals/?CertNo=5443460&Type=OP&City=MAKATI+CITY&Hospital=
+        $url = $_SERVER['heyphilwebservice']."/Search.svc/SearchHospitals/?CertNo=".$cert."&Type=OP&City=".$this->url_encode($city)."&Hospital=".$hospital;
+        $string = file_get_contents($url);
+        $json_a = json_decode($string,TRUE);
+        //print_r($url);
+        /*$ch = curl_init();
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_URL, $url);
+        $result = curl_exec($ch);
+        curl_close($ch);
+
+        $json_a = json_decode($result);
+        print_r($json_a);*/
+        return $json_a;
+    }
+    
+    function getSearchAttending($provider){
+        //https://apps.philcare.com.ph/PhilcareWatsonTest/Search.svc/SearchDoctors/?ProviderCode=&DoctorName=&Specialization=
+        $url = $_SERVER['heyphilwebservice']."/Search.svc/SearchDoctors/?ProviderCode=".$provider."&DoctorName=&Specialization=";
+        $string = file_get_contents($url);
+        $json_a = json_decode($string,TRUE);
+        return $json_a;
+    }
+    
+    function url_encode($string){
+        return urlencode(utf8_encode($string));
     }
     function getNewSearchProvidersDoctors($city,$distct,$hospital,$type,$certno){
         //$url = 'https://apps.philcare.com.ph/PCareWebServicesTest/Providers.svc/Doctors/?CertNo=&Province=&Area=&LastName=&FirstName=&Specialization=';
@@ -670,7 +742,7 @@ class wslibrary {
         
         
         $url = $_SERVER['webservicemobile'].'/Providers.svc/FindProviders/?Type='.$type.'&City='.$city.'&District='.$distct.'&Hospital='.$hospital.'&Top=100&CertNo='.$certno;
-        print_r($url);
+        //print_r($url);
         //$url = 'https://apps.philcare.com.ph/iPhilCare_Mobile/Providers.svc/FindProviders/?Type=Dialysis&City=&District=&Hospital=&Top=100&CertNo=5443460';
        // try {
             $xml = @simplexml_load_file($url,'SimpleXMLElement', LIBXML_NOWARNING);

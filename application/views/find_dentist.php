@@ -44,29 +44,9 @@
                         <ul class="list-group row">
                             <li class="list-group-item">
                                 <div class="row">
-                                    <div class="col-sm-6 col-lg-5">
-                                        <div class="form-group">
-                                            <div class="metro">
-                                                <select class="form-control" id="state" name="state" data-settings='{"cutOff":10}'>
-                                                    <option value="0" >STATE</option>
-                                                    <option value="MM">METRO MANILA</option>
-                                                    <option value="LZ">LUZON</option>
-                                                    <option value="VI">VISAYAS</option>
-                                                    <option value="MI">MINDANAO</option>
-                                                </select>
-                                            </div>  
-                                        </div><!-- /input-group -->
-                                    </div><!-- /.col-lg-6 -->
                                     
-                                    <div class="col-sm-6 col-lg-5">
-                                        <div class="form-group">
-                                            <div class="metro">
-                                                <select class="dval form-control" id="dregion" name="region">
-                                                    <option value="0" class="label">REGION</option>
-                                                </select>
-                                            </div>   
-                                        </div><!-- /input-group -->
-                                    </div><!-- /.col-lg-6 -->
+                                    
+                                    
                                     <div class="col-lg-2">
                                         <div class="lloading"></div>
                                     </div>
@@ -81,6 +61,12 @@
                                                 <select class="form-control" id="area_name" data-settings='{"cutOff":10}'>
                                                     <option value="0" class="label">PROVINCE/METRO MANILA</option>
                                                     
+                                                    <?php
+                                                    $count = count($provinces['ProvinceResult']);
+                                                    ?>
+                                                    <?php for($x = 0;$x<$count;$x++): ?>
+                                                    <option value="<?php echo $provinces['ProvinceResult'][$x]['ProvinceCode'] ?>|<?php echo $provinces['ProvinceResult'][$x]['ProvinceDesc'] ?>"><?php echo $provinces['ProvinceResult'][$x]['ProvinceDesc'] ?></option>
+                                                    <?php endfor; ?>
                                                 </select>
                                             </div>  
                                         </div><!-- /input-group -->
@@ -117,9 +103,17 @@
                             <div class="row"><img src="<?php echo base_url("resources/img/ajax-loader.gif");?>"></div>
                         </div>   
                         <div class="">
-                            <p>You may do an advanced search by choosing a location or specifying the clinic or hospital name. For further assistance, please call our Customer Service Hotline: +63(2) 462-1802, for Globe Philcare Mobile Hotline: 0995-1353160, for Smart Philcare Mobile Hotline: 0998-9647517.</p>
-                                
-                        </div>  		  
+                            <p>To find a provider - clinic:<br /> Step 1: Choose Province/Metro Manila<br />Step 2: Click SEARCH<br/>You may do an advanced search by choosing a location or specifying the clinic or hospital name. 
+                                <?php
+    
+                    $session_data = $this->session->userdata('logged_in');
+                    if($session_data['agreement_no']!="PC10917" && $session_data['agreement_no']!="PC10889" && $session_data['agreement_no']!="PC10939"){
+                        ?>
+                                For further assistance, please call our Customer Service Hotline: +63 (2) 462-1800 or for outside Metro Manila (Toll Free for PLDT): 1-800-1888-3230.</p>
+                    <?php } else{ ?>
+                            For further assistance, please call our Customer Service Hotline: +63 (2) 462-1802, for Globe Philcare Mobile Hotline : 0995-1353160, for Smart Philcare Mobile Hotline: 0998-9647517.</p>
+                    <?php } ?>
+                        </div>  		 		  
 
                         <div class="row gmap"></div>
                         <div class="loadcontent"></div>  
@@ -150,29 +144,31 @@
 $(document).ready(function(){
    
     $("#startfinding").click(function(){
-        var state = $("#state").val();
-        var region = $("#dregion").val();
-		
+     
         var area=$("#area_name").val();	
         var dt=$("#district").val();
         var certno = $("#certno").val();
         
-        var region2 = region.split("|");
-        region2 = region2[1];
-        
+     
         var area2 = area.split("|");
         area2 = area2[1];
         
         var dt2 = dt.split("|");
         dt2 = dt2[1];
-        //if(area!='0' || dt!='0' || state !='0' || region!='0'){
-            //alert(state+" "+region2+" "+area2+" "+dt2);
-            $(".loaderphil").show();
-            $.post("<?php echo base_url("providers/getprovider_dentist");?>",{state:state,region:region2,province:area2,district:dt2},function(data){
+        
+        $(".loaderphil").show();
+        
+        
+            $.post("<?php echo base_url("providers/getprovider_dentist");?>",{province:area2,district:dt2},function(data){
 				
                 $(".loadcontent").html(data);
 		$(".loaderphil").hide();
             });
+       
+        //if(area!='0' || dt!='0' || state !='0' || region!='0'){
+            //alert(state+" "+region2+" "+area2+" "+dt2);
+            
+            
 	//}else{                    
         //    alert("Please Provide Required Fields");
 	//}

@@ -24,6 +24,7 @@ class Guidebook extends CI_Controller {
 		//page renew
         $renew = array("page_id"=>74);
         $this->session->set_userdata('pages',$renew);
+        $this->agreeement = $session_data['agreement_no'];
 
     }
     
@@ -48,6 +49,8 @@ class Guidebook extends CI_Controller {
     
     function add(){
         $renew = array("page_id"=>74);
+		 
+		 
         $this->session->set_userdata('pages',$renew);		
         if(isset($_REQUEST['submitnews'])){
             
@@ -79,7 +82,7 @@ class Guidebook extends CI_Controller {
             // Check file size
            
             // Allow certain file formats
-           
+           //print_r($imageFileType);
             // Check if $uploadOk is set to 0 by an error
             if ($uploadOk == 0) {
                 //$msg =  "Sorry, your file was not uploaded.";
@@ -87,6 +90,7 @@ class Guidebook extends CI_Controller {
                 $this->session->set_userdata('upload_error', $msg);
             // if everything is ok, try to upload file
             } else {
+				print_r($_FILES["fileToUpload"]);
                 if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
                     $data = array(			
                     "title"=>$_POST['title'],   
@@ -97,14 +101,15 @@ class Guidebook extends CI_Controller {
                     $event=$this->model_portal_admin->insertGuidebook($data);
                     $session_data = $this->session->userdata('logged_in');
                     $this->load->library('archive');
-                    $this->archive->addAudit($session_data['user_id'],'guidebook','add','1',$session_data['agreement_no']);
+                    
+                    $this->archive->addAudit($session_data['user_id'],'guidebook','add','1',$_POST['agreement_no']);
                     if($event){
                         redirect("guidebook");
                     }
                     $msg_ok =  "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
                     $this->session->set_flashdata('upload_ok', $msg_ok);
                 } else {
-                    echo "Sorry, there was an error uploading your file.";
+                    //echo "Sorry, there was an error uploading your file.";
                     $this->session->set_flashdata('upload_error', "Sorry, there was an error uploading your file.");
                 }
             }
@@ -114,8 +119,9 @@ class Guidebook extends CI_Controller {
         
         $id = $session_data['agreement_no'];
         $data['agreement_no'] = $id;
+        
         $data['guidebooks'] = $this->model_portal_admin->getGuidebookActive($id);
-        $data['logo'] = $this->model_portal_admin->getAllUserActive();
+        $data['logo'] = $this->model_portal_admin->getAllUserActive();		
         $this->maintemp('cms/create_guidebook',$data);	
     }
     
@@ -203,7 +209,7 @@ class Guidebook extends CI_Controller {
         if($news){
             $session_data = $this->session->userdata('logged_in');
             $this->load->library('archive');
-            $this->archive->addAudit($session_data['user_id'],'guidebook','deactivate','1',$session_data['agreement_no']);
+            $this->archive->addAudit($session_data['user_id'],'guidebook','deactivate','1');
             redirect(base_url("guidebook"));
         }else{
             redirect(base_url("guidebook"));
@@ -216,7 +222,7 @@ class Guidebook extends CI_Controller {
         if($news){
             $session_data = $this->session->userdata('logged_in');
             $this->load->library('archive');
-            $this->archive->addAudit($session_data['user_id'],'guidebook','activate','1',$session_data['agreement_no']);
+            $this->archive->addAudit($session_data['user_id'],'guidebook','activate','1');
             redirect(base_url("guidebook"));
         }else{
             redirect(base_url("guidebook"));
@@ -261,7 +267,7 @@ class Guidebook extends CI_Controller {
                 $del = $this->model_portal_admin->guidebookDelete($id);
                 $session_data = $this->session->userdata('logged_in');
                 $this->load->library('archive');
-                $this->archive->addAudit($session_data['user_id'],'guidebook','delete','1',$session_data['agreement_no']);
+                $this->archive->addAudit($session_data['user_id'],'guidebook','delete','1');
                 $this->session->set_flashdata('msg', 'Guidebook was deleted');
                 redirect('guidebook');
             }

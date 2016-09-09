@@ -57,10 +57,13 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="inputEmail3"></label>
                             <div class="col-sm-10">
+                                <?php if($agreement_no == "PC11115"){ ?>
+                                <?php }else{ ?>
                                 <div class="radio">
                                     <label><input type="radio" name="others" value="HIB">HIB (Hospital Income Benefit) – reimbursement for excess in room and board on confinements due accident
-</label>
+                                    </label>
                                 </div>
+                                <?php } ?>
                                 <div class="radio">
                                     <label><input type="radio" name="others" value="HMO">HMO – General Reimbursement Request
 </label>

@@ -20,6 +20,7 @@ class News extends CI_Controller {
 		//page renew
         $renew = array("page_id"=>49);
         $this->session->set_userdata('pages',$renew);
+         $this->agreement = $session_data['agreement_no'];
     }
     
     function maintemp($temp,$data){
@@ -359,7 +360,8 @@ class News extends CI_Controller {
                     $event=$this->model_portal_admin->insertVideo($data);
                     //$session_data = $this->session->userdata('logged_in');
                     $this->load->library('archive');
-                    $this->archive->addAudit($session_data['user_id'],'news','video_add_admin','1');
+                    $this->archive->addAudit($session_data['user_id'],'news','video_add_admin','1',$this->agreement);
+                    
                     if($event){
                         redirect("news/video_all");
                     }

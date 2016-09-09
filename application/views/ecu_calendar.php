@@ -1,7 +1,3 @@
-<?php if ($this->session->flashdata('msg')) { ?>
-                <div class="alert alert-danger"> <?= $this->session->flashdata('msg') ?> </div>
-            <?php } ?>
-            
 <?php
 
         if(isset($_GET['month'])){
@@ -48,12 +44,14 @@
         /* get all events for the given month */
         //$events = array();
         $query ="";
-        
+        if ($this->session->flashdata('msg')) { 
+            echo '<div class="col-md-6"><div class="alert alert-danger"> '.$this->session->flashdata("msg") .' </div></div>';
+        } 
         echo '<div class="col-md-9">';
         echo '<h2 style="float:left; padding-right:30px;">'.date('F',mktime(0,0,0,$month,1,$year)).' '.$year.'</h2>';
         echo '<div style="float:left;">'.$controls.'</div>';
         echo '<div style="clear:both;"></div>';
-        
+        //print_r($events);
         echo draw_calendar($month,$year,$events);
         echo '<br /><br />';
         echo '</div>';

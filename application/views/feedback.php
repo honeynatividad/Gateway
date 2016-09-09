@@ -17,7 +17,7 @@
                         <div class="col-sm-9 feedinfo">
                           <h1><?php echo $user['fullname'];?></h1>
                         </div>
-                    </div>
+                    </div>                    
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Category</label>
                         <div class="col-sm-9">
@@ -25,12 +25,17 @@
                                 <option value="">---- Select Category ----</option>
                                 <option value="Card Availability">Card Availability</option>
                                 <option value="Benefit Plan">Benefit Plan</option>
+                                <?php if($agreement == "PC10889" || $agreeement == "PC10917" || $agreement == "PC10939"): ?>
                                 <option value="Co-Pay Facilities">Co-Pay Facilities</option>
+                                <?php endif; ?>
                                 <option value="Availment Process">Availment Process</option>
                                 <option value="Provider Network, including Dental Clinics">Provider Network, including Dental Clinics</option>
                                 <option value="Accreditation Requests and Status">Accreditation Requests and Status</option>
                                 <option value="Reimbursement Claims">Reimbursement Claims</option>
+                                <?php if($agreement == "PC10889" || $agreeement == "PC10917" || $agreement == "PC10939"): ?>
                                 <option value="Gcash-related">Gcash-related</option>                                
+                                <?php endif; ?>
+                                
                             </select>
                         </div>
                     </div>

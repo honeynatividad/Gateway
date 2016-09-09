@@ -20,26 +20,46 @@
         </div>
         <div class="panel-body">
             <div class="row">
+                <?php
+                    if($session_data['agreement_no'] == "PC00400"){
+                        
+                    }else{
+                    ?>
                 
                 <div class="col-md-6">
+                    
                     <span class="label badge-feed-green">Watch Video</span>                    
+                    <?php if($session_data['agreement_no'] == "PC11115"){ ?>
+                    <?php foreach($videos as $video): ?>
+                    <div class="col-md-12">    
+                        <?php echo $video->title ?>
+                        <video width="320" height="240" controls>
+                                <source src="<?php echo base_url('resources/video')."/".$video->file_name ?>" type="video/mp4">
+                                <source src="<?php echo $video->file_name ?>" type="video/ogg">
+                                Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <?php endforeach; ?>
+                    <?php }else{ ?>
                     <?php foreach($videos as $video): ?>
                     <div class="col-md-12">                        
                         <a href="<?php echo $video->file_name ?>" target="_blank"  ><?php echo $video->title ?></a>
                     </div>
                     <?php endforeach; ?>
                     
-                    
+                    <?php } ?>
                 </div>
                 <div class="col-md-6">
-                    <span class="label badge-feed-green">Guide Book</span>
+                    <span class="label badge-feed-green">Guide Book</span>                    
                     <?php foreach($guidebooks as $guidebook): ?>
                     <div class="col-md-12">
-                        <a href="pdf_server.php?file=<?php echo $guidebook->file_name ?>">Download Pdf file for guide book</a>
+                        <a href="pdf_server.php?file=<?php echo $guidebook->file_name;  ?>">Download Pdf file for guide book</a>
                     </div>
                     <?php endforeach; ?>
                     
                 </div>
+                    <?php }
+                    ?>
             </div>
             <div class="row">&nbsp;</div>
             
@@ -51,6 +71,11 @@
 					<!--<span class="label badge-feed-red">Wellness Buddies</span>-->	
                 </div>
                 <div class="col-md-4">
+                    <?php
+                    if($session_data['agreement_no'] == "PC00400"){
+                        
+                    }else{
+                    ?>
                     <div class="feed-sp-button">
                         
                         <?php 
@@ -69,7 +94,8 @@
                            
                	   <!-- <input type="checkbox" value="1" name="my-checkbox" data-checkbox="2" class="feedchange"> -->
                 	<span class="label badge-feed-light " id="right-switch" title="Grid View">PhilCare</span>
-                    </div>     
+                    </div>    
+                    <?php } ?>
                 </div>
             </div>
             
@@ -93,8 +119,7 @@
                         }
                         ?>
             <div id="articlereplace" >
-
-
+             
             </div>
     </div>               
     
@@ -102,7 +127,13 @@
 </div>	
 
 <script>
+   
 $(document).ready(function(){
+    $("#articlereplace2").html('<div class="loaderphil" id="thisanchor"><div class="row"><img src="<?php echo base_url("resources/img/ajax-loader.gif");?>"></div></div>');
+		$(".loaderphil").show();
+    $("#articlereplace2").load("<?php echo base_url("home/tilefeed");?>",function(){
+			
+		});	
     $("#close").on('click', function(){
         stopVideo();
     });
@@ -123,15 +154,16 @@ $(document).ready(function(){
 	$(".feedchange").bootstrapSwitch();
 
 	$('.feedchange').on('switchChange.bootstrapSwitch', function (event, state) {
-		var thisData = $(this).attr('data-checkbox');
-		 	if(thisData==1){
-                            alert(1);
+            var thisData = $(this).attr('data-checkbox');
+            
+            if(thisData==1){
+                alert(1);
 				
-				$(this).attr('data-checkbox',2);
-				$("#left-switch").css({'color':'#168246','line-height': '1','background-color': '#45b29d','font-size':'13px','border-radius':'5px','padding':'5px 16px'});
-				$("#right-switch").css('color','#cecfd1');
-				getloadcurrent();
-			}else if(thisData==2){
+		$(this).attr('data-checkbox',2);
+		$("#left-switch").css({'color':'#168246','line-height': '1','background-color': '#45b29d','font-size':'13px','border-radius':'5px','padding':'5px 16px'});
+		$("#right-switch").css('color','#cecfd1');
+		getloadcurrent();
+            }else if(thisData==2){
 				
 				$(this).attr('data-checkbox',1);
 				$("#left-switch").css('color','#fff');
@@ -142,6 +174,8 @@ $(document).ready(function(){
 				$("#articlereplace").load("<?php echo base_url("home/news_all");?>",function(){
 					
 				});
+                                
+                                
 				
 			}
 	});
@@ -181,6 +215,7 @@ function getloadcurrent(){
 	});	
 	
 }
+
 
 function autoPlayYouTubeModal(){
     jQuery('#videoModal').on('hidden.bs.modal', function (e) {

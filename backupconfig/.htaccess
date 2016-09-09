@@ -1,17 +1,15 @@
-<IfModule mod_rewrite.c>
-RewriteEngine On
-RewriteBase /gateway/
-RewriteBase /gateway/download/
-RewriteRule ^index\.php$ - [L]
+RewriteEngine on
+RewriteBase /
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . /gateway/index.php [L]
+RewriteRule .* gateway/index.php/$0 [PT,L] 
+RewriteCond %{REQUEST_URI} /hra$
 SetEnv webservice https://apps.philcare.com.ph/PCareWebServicesTest
-SetEnv webservicemobile https://apps.philcare.com.ph/iPhilCare_Mobile
-php_value upload_max_filesize 500M
-php_value memory_limit 256M
-php_value post_max_size 500M
-AddType video/ogg .ogv .ogg
-AddType video/webm .webm
-AddType video/mp4 .mp4
-</IfModule>
+SetEnv webservicemobile https://apps.philcare.com.ph/iPhilCare_Mobile  
+SetEnv newwebservice https://apps.philcare.com.ph/IPhilCareWSTest
+SetEnv heyphilwebservice https://apps.philcare.com.ph/PhilcareWatsonTest
+php_value post_max_size 2000M
+php_value upload_max_filesize 2500M
+php_value max_execution_time 6000000
+php_value max_input_time 6000000
+php_value memory_limit 2500M

@@ -107,6 +107,10 @@
                         <div class="col-md-8"><?php echo $info->AccountType ?></div>
                     </div>
                     <div class="row">
+                        <div class="col-md-4"><font color="red">*</font>Access Type</div>
+                        <div class="col-md-8"><?php echo $info->PackageDescription ?></div>
+                    </div>
+                    <div class="row">
                         <div class="col-md-4">Plan Type</div>
                         <div class="col-md-8"><?php echo $info->PlanType ?></div>
                     </div>
@@ -141,6 +145,12 @@
                     <div class="row">
                         <div class="col-md-4">Benefit Limit</div>
                         <div class="col-md-8"><?php echo $info->BenefitLimit ?></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p>&nbsp;</p>
+                            <p style="color:red;font-size:12px;font-style:italic;">Clinic based/Preferred access: For Out-patient, a member’s health is managed only through our accredited clinics of PhilCare. For In-Patient and Emergency cases, member may avail of the service to any of our accredited hospitals.</p>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -171,7 +171,7 @@ if($session_data['level']==2){
                                     <img class="img-circle" style="width: 50px; height: 50px;" src="<?php echo base_url("upload/profile/".$uinfo->image);?>" data-holder-rendered="true">
                                     <?php }else{
                                         $target_dir = dirname($_SERVER["SCRIPT_FILENAME"])."/upload/profile/";                                        
-                            $fileSearch = "God_of_War";
+                                        $fileSearch = "God_of_War";
                             
                             
                             $files = glob($target_dir . $udetails->CertNo . ".jpg");

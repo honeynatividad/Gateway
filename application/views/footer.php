@@ -181,6 +181,18 @@ if($ses_data['level']==1){
                 <li><a href="http://www.philcare.com.ph/privacy-policy/">Privacy Policy</a></li>  
                         <!--<li>Sitemap</li>-->
             </ul>
+           
+        </div>
+        <div class="col-lg-12">
+            
+            <ul class="footer-info">
+                <img src="<?php echo base_url('resources/img/gomobile.png') ?>" style="width:50px;height:50px;">
+                <!--<li><a href="<?php echo base_url("phil/terms");?>">Terms and Condition</a></li>
+                <li><a href="<?php echo base_url("phil/privacy");?>">Privacy Policy</a></li>-->
+                <a href='https://play.google.com/store/apps/details?id=com.app.philcaregomobile&hl=en'><img src='<?php echo base_url("resources/img/android.jpg") ?>'></a>
+                <a href='https://itunes.apple.com/ph/app/philcare-go!mobile/id917095709?mt=8'><img src='<?php echo base_url("resources/img/appstore.jpg") ?>'></a>
+                        <!--<li>Sitemap</li>-->
+            </ul>
                     
         </div>
     </div>

@@ -3,29 +3,30 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Home extends CI_Controller {
 	
-	function __construct(){
-		parent::__construct();	
-		$this->load->model("model_portal_users");
-		 $session_data = $this->session->userdata('logged_in');
-		 if(!$session_data){
-			 redirect("login");
-		 }
-		 $data['username'] = $session_data['username'];	
+    function __construct(){
+        parent::__construct();	
+	$this->load->model("model_portal_users");
+	$session_data = $this->session->userdata('logged_in');
+	if(!$session_data){
+            redirect("login");
+        }
+	$data['username'] = $session_data['username'];	
 		//page renew                 
 		
-		$renew = array("page_id"=>1);
-		$this->session->set_userdata('pages',$renew);
+	$renew = array("page_id"=>1);
+	$this->session->set_userdata('pages',$renew);
 		//$this->model_portal_users->activateuser($session_data['user_id']);
 		//$this->model_portal_users->deactivatepages();
 		//$this->model_portal_users->updatename(22,'Feedback');
-	}
-	function maintemp($temp,$data){
-		$this->load->view('header',$data);
-		$this->load->view($temp,$data);
-		$this->load->view('footer');
-	}
+    }
+    
+    function maintemp($temp,$data){
+        $this->load->view('header',$data);
+	$this->load->view($temp,$data);
+	$this->load->view('footer');
+    }
 	
-	function index(){            
+    function index(){            
           
         $this->load->model("model_portal_admin");
         $session_data = $this->session->userdata('logged_in');
@@ -34,7 +35,7 @@ class Home extends CI_Controller {
             	redirect('hra');
             }
         }*/
-            
+        $data['session_data'] = $session_data;
         $id = $session_data['agreement_no'];
         $data['warning'] =$this->session->flashdata('error_access');
         $data['id'] = $id;
@@ -42,6 +43,7 @@ class Home extends CI_Controller {
         $data['videos'] = $this->model_portal_admin->getAllVideoActive($id);
         $data['guidebooks'] = $this->model_portal_admin->getGuidebookActive($id);
             //$this->load->view('header',$data);
+        //print_r($session_data);
         $this->maintemp('newsfeed',$data);
 	}
    

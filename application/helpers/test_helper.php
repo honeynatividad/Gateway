@@ -36,7 +36,7 @@ if(!defined('BASEPATH')) exit('No direct script access allowed');
 	for($list_day = 1; $list_day <= $days_in_month; $list_day++):
             $calendar.= '<td class="calendar-day"><div style="position:relative;height:100px;">';
 			/* add in the day number */
-            $calendar.= '<div class="day-number">'.$list_day.'</div>';
+            $calendar.= '<div class="day-number">'.$list_day.'</div><div class="clear-calendar"></div>';
 			
             $event_day = $year.'-'.$month.'-'.$list_day;
             
@@ -50,19 +50,19 @@ if(!defined('BASEPATH')) exit('No direct script access allowed');
                 $event_day =$getMonth.'/'.$list_day.'/'.$year;
             //}
             
-                        
+                       
             foreach($events as $event){
-                            //echo '<pre>';
-                            //echo $event_day;
-                            //echo $event->Requestdate;
-                            //echo '</pre>';
+                
                 if(trim((string)$event->Requestdate) == trim((string)$event_day)){
+					
                     $status = trim((string)$event->RequestStatus);
                     if($status=="PENDING"){
                         $calendar.= '<div class="event_red"><a href="#" data-toggle="modal" data-target="#myModal" >'.$event->RequestStatus.'</a></div>';
                     }elseif($status=="APPROVED"){
                         $calendar.= '<div class="event_green">'.$event->RequestStatus.'</div>';
-                    }
+                    }else{
+						$calendar.= str_repeat('<p>&nbsp;</p>',2);
+					}
                     $calendar.= '<div id="myModal" class="modal fade" role="dialog">';
                     $calendar.= '<div class="modal-dialog">';
 
@@ -70,7 +70,7 @@ if(!defined('BASEPATH')) exit('No direct script access allowed');
                     $calendar.= '<div class="modal-content">';
                     $calendar.= '<div class="modal-header">';
                     $calendar.= '<button type="button" class="close" data-dismiss="modal">&times;</button>';
-                    $calendar.= '<h4 class="modal-title">Oline Scuedule Appointment</h4>';
+                    $calendar.= '<h4 class="modal-title">Online Scuedule Appointment</h4>';
                     $calendar.= '</div>';
                     $calendar.= '<div class="modal-body">';
                     $calendar.= '<span>Date: '.date("M/d",strtotime($event->Requestdate)).'</span>';                            
@@ -86,7 +86,8 @@ if(!defined('BASEPATH')) exit('No direct script access allowed');
                     $calendar.= '</div>';
                                 
                 }else {
-                    $calendar.= str_repeat('<p>&nbsp;</p>',2);
+					
+                    
                 }
                             
                             

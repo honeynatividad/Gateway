@@ -105,6 +105,10 @@ class Login extends CI_Controller {
                         $check_login = 1;
                         $agreement = "PC10889";
                     }*/
+                    if((string)$memdetails->CertNo=="5443460"){
+                        $check_login = 1;
+                    //    $agreement = "PC11115";
+                    }
                     if((string)$memdetails->CertNo=="7346920"){
                         $check_login = 1;
                         $agreement = "PC10889";

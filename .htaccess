@@ -4,6 +4,12 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule .* gateway/index.php/$0 [PT,L] 
 RewriteCond %{REQUEST_URI} /hra$
-SetEnv webservice https://apps.philcare.com.ph/PCareWebServicesTest
+SetEnv webservice https://apps.philcare.com.ph/PCareMicrositeTest
 SetEnv webservicemobile https://apps.philcare.com.ph/iPhilCare_Mobile
-SetEnv newwebservice http://apps.philcare.com.ph/IPhilCareWSTest  
+SetEnv newwebservice https://apps.philcare.com.ph/IPhilCareWSTest  
+SetEnv heyphilwebservice https://apps.philcare.com.ph/PhilcareWatsonTest
+php_value post_max_size 2000M
+php_value upload_max_filesize 2500M
+php_value max_execution_time 6000000
+php_value max_input_time 6000000
+php_value memory_limit 2500M

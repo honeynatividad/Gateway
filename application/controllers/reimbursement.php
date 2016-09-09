@@ -104,8 +104,15 @@ class Reimbursement extends CI_Controller {
                         //$set = $this->wslibrary->setReimbursement($this->certid,$request_date,$description,$file_path);
                        // print_r($set);
                         //if($set){
+                            $email_add = 'teletechclaims@philcare.com.ph';
                             $insert = $this->model_portal_admin->insertReimbursement($d);
-							$this->send_mail('hanna.natividad@philcare.com.ph','TTECH Request for Reimbursement',$d);
+                            //print_r($session_data['agreement_no']);
+                            if($session_data['agreement_no'] == 'PC11115'){
+                                $email_add = 'SolaireClaims@philcare.com.ph';
+                            }else if($session_data['agreement_no'] == 'PC10889' || $session_data['agreement_no'] == 'PC10917' || $session_data['agreement_no'] == 'PC10939'){
+                                $email_add = 'teletechclaims@philcare.com.ph';
+                            }
+							$this->send_mail('hanna.natividad@philcare.com.ph','TTECH Request for Reimbursement',$d,$email_add);
                             $this->session->set_flashdata('upload_ok', 'Successfully send a reimbursement request ');
                         //}else{
                         //    $this->session->set_flashdata('upload_errors', $set->MessageReturn);
@@ -143,14 +150,16 @@ class Reimbursement extends CI_Controller {
 		$t = $this->send_mail("hanna.natividad@philcare.com.ph","This is my email for you");
 		//print_r($t);
 	}
-    public function send_mail($to,$subject,$d) {
-		
+    public function send_mail($to,$subject,$d,$email_add) {
+        //$session_data = $this->session->userdata('logged_in');   
+        
+        //print_r($email_add);
         $this->load->library('My_PHPMailer');
         $mail = new PHPMailer();	
 		//$mail->SMTPDebug = 2;       
         $mail->SMTPAuth   = false; 
         $mail->SMTPSecure = "ssl"; 
-        $mail->Host       = '172.16.255.6'; 
+        $mail->Host       = '172.16.108.58';
         $mail->Port       = 25; 
         $mail->Username   = 'advisory@philcare.com.ph'; 
         $mail->Password   = 'P@ssw0rd'; 
@@ -158,7 +167,8 @@ class Reimbursement extends CI_Controller {
         
         $destino = $to;         
         //$mail->addAddress('Rosemarie.Sangalang@PhilCare.com.ph');        
-        $mail->addAddress('teletechclaims@philcare.com.ph');
+        //$mail->addAddress('teletechclaims@philcare.com.ph');
+        $mail->addAddress($email_add);
         $mail->AddBCC("Rosemarie.Sangalang@PhilCare.com.ph");
         $mail->AddBCC($to);        
         $mail->IsHTML(true);

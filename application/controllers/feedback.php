@@ -25,8 +25,10 @@ class Feedback extends CI_Controller {
     }
     
     function index(){
-        $this->maintemp('feedback',array());
         $session_data = $this->session->userdata('logged_in');
+        $data['agreement'] = $this->agreement;
+        $this->maintemp('feedback',$data);
+        
         //print_r($session_data);
         if(isset($_POST['submit'])){
             $category = $_POST['category'];

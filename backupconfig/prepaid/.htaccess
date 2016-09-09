@@ -1,0 +1,12 @@
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ /prepaid-card/index.php/$1 [L]
+SetEnv webservice https://apps.philcare.com.ph/PCareWebServicesTest
+SetEnv webservicemobile https://apps.philcare.com.ph/iPhilCare_Mobile
+SetEnv webservicejson https://apps.philcare.com.ph/IPhilCareWS
+php_value upload_max_filesize 500M
+php_value memory_limit 256M
+php_value post_max_size 500M
+</IfModule>

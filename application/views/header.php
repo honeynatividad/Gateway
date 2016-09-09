@@ -265,7 +265,7 @@ if($session_data['level']==1){
                                     $check = $this->model_portal_pages->checkProviderModule($session_data['agreement_no']);
                                     if($check==1){
                                         //echo "Provider";
-                                    ?>
+                                ?>
                             <li class="<?php if($sess_pages['page_id']==$page->page_id){echo 'active';}?> <?php if($page->has_sub==1){echo 'dropdown';}?>">
                                 <a href="<?php echo base_url($page->page_url);?>" <?php if($page->has_sub==1){echo 'data-toggle="dropdown" class="dropdown-toggle"';}?>>
 				                <?php echo $page->page_name;?>
@@ -701,9 +701,18 @@ if($session_data['level']==1){
                                         <?php
                                                 }
                                             }else{
+                                                if($sub->page_id==106){
+                                                    if($session_data['agreement_no']=='PC10889' || $session_data['agreement_no'] == 'PC10917' || $session_data['agreement_no'] == 'PC10939'){
+                                                    ?>
+                                                    <a href="<?php echo base_url($sub->page_url);?>"><?php echo $sub->page_name;?></a>
+                                                    <?php
+                                                    }else{
+                                                        
+                                                    }
+                                                }else{
                                         ?>
                                         <a href="<?php echo base_url($sub->page_url);?>"><?php echo $sub->page_name;?></a>
-                                        <?php }}?>
+                                                <?php }}}?>
                                     </li>
                                     <?php }?>
                             	</ul>
@@ -868,7 +877,114 @@ if($session_data['level']==1){
                             </li>
                                     <?php
                                     }
+                                }elseif($page->page_id == 65){
+                                    if($session_data['agreement_no']==""){
+                                        
+                                    }else{
+                                ?>
+                            <li class="<?php if($sess_pages['page_id']==65){echo 'active';}?> <?php if($page->has_sub==1){echo 'dropdown';}?>">
+                                <a href="<?php echo base_url($page->page_url);?>" <?php if($page->has_sub==1){echo 'data-toggle="dropdown" class="dropdown-toggle"';}?>>
+				<?php echo $page->page_name;?>
+							<!--<span class="badge badge-orange">14</span>-->
+                            
+                                <?php if($page->has_sub==1){echo '<i class="glyphicon glyphicon-chevron-right"></i>';}?>
+                                <?php if($page->page_id==3){?>
+                                    <?php if($page->msg_totals>0){?>
+                                        <span class="badge badge-orange"><?php echo $page->msg_totals;?></span>
+                                    <?php }?>
+                                <?php }?>                             
+				</a>
+							
+                            <?php if($page->has_sub==1){?>
+                            	<ul role="menu" class="dropdown-menu dd-menu">
+                                <?php 
+                                    if($session_data['level']==2){
+                                        $subs = $this->model_portal_pages->getAllSubAdminPagesById($page->page_id);                                    
+                                    }else {
+                                        $subs = $this->model_portal_pages->getAllSubPagesById($page->page_id);
+                                    }
+                                    foreach($subs as $sub){?>
+                                    <li>
+                                    	<?php if($sub->page_id==18){ ?>
+                                    	<a href="#" class="myappointclick"><?php echo $sub->page_name;?></a>
+                                   	<?php }else{
+                                            if($session_data['level']==1){
+                                                if($sub->page_level==2){
+                                                    
+                                                }else{
+                                        ?>
+                                        <a href="<?php echo base_url($sub->page_url);?>"><?php echo $sub->page_name;?></a>
+                                        <?php
+                                                }
+                                            }else{
+                                        ?>
+                                        <a href="<?php echo base_url($sub->page_url);?>"><?php echo $sub->page_name;?></a>
+                                        <?php }}?>
+                                    </li>
+                                    <?php }?>
+                            	</ul>
+                            <?php }?>
+                            
+                            </li>
+                            
+                                <?php
+                                    }
+                                }elseif($page->page_id == 54){
+                                    if($session_data['agreement_no']==""){
+                                        
+                                    }else{
+                                ?>
+                            <li class="<?php if($sess_pages['page_id']==54){echo 'active';}?> <?php if($page->has_sub==1){echo 'dropdown';}?>">
+                                <a href="<?php echo base_url($page->page_url);?>" <?php if($page->has_sub==1){echo 'data-toggle="dropdown" class="dropdown-toggle"';}?>>
+				<?php echo $page->page_name;?>
+							<!--<span class="badge badge-orange">14</span>-->
+                            
+                                <?php if($page->has_sub==1){echo '<i class="glyphicon glyphicon-chevron-right"></i>';}?>
+                                <?php if($page->page_id==3){?>
+                                    <?php if($page->msg_totals>0){?>
+                                        <span class="badge badge-orange"><?php echo $page->msg_totals;?></span>
+                                    <?php }?>
+                                <?php }?>                             
+				</a>
+							
+                            <?php if($page->has_sub==1){?>
+                            	<ul role="menu" class="dropdown-menu dd-menu">
+                                <?php 
+                                    if($session_data['level']==2){
+                                        $subs = $this->model_portal_pages->getAllSubAdminPagesById($page->page_id);                                    
+                                    }else {
+                                        $subs = $this->model_portal_pages->getAllSubPagesById($page->page_id);
+                                    }
+                                    foreach($subs as $sub){?>
+                                    <li>
+                                    	<?php if($sub->page_id==18){ ?>
+                                    	<a href="#" class="myappointclick"><?php echo $sub->page_name;?></a>
+                                   	<?php }else{
+                                            if($session_data['level']==1){
+                                                if($sub->page_level==2){
+                                                    
+                                                }else{
+                                        ?>
+                                        <a href="<?php echo base_url($sub->page_url);?>"><?php echo $sub->page_name;?></a>
+                                        <?php
+                                                }
+                                            }else{
+                                        ?>
+                                        <a href="<?php echo base_url($sub->page_url);?>"><?php echo $sub->page_name;?></a>
+                                        <?php }}?>
+                                    </li>
+                                    <?php }?>
+                            	</ul>
+                            <?php }?>
+                            
+                            </li>
+                            
+                                <?php
+                                    }
                                 }else{
+                                    
+                                        
+                                   
 			?>
                             <li class="<?php if($sess_pages['page_id']==$page->page_id){echo 'active';}?> <?php if($page->has_sub==1){echo 'dropdown';}?>">
                                 <a href="<?php echo base_url($page->page_url);?>" <?php if($page->has_sub==1){echo 'data-toggle="dropdown" class="dropdown-toggle"';}?>>
